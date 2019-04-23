@@ -21,7 +21,7 @@ maxJets         = 50
 bunchCrossing   = 0
 pt_min          = 20
 
-def FillVector(source,variables,minPt=pt_min, runAOD = True, offline = False):
+def FillVector(source,variables,minPt=pt_min, runAOD = False, offline = False):
     variables.num[0] = 0
     for obj in source.productWithCheck():
         if obj.pt()<minPt: continue

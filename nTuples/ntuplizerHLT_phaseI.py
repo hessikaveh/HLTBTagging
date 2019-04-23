@@ -43,7 +43,7 @@ def TaggedJet(jet, trackIPTagInfos ):
     print "No Match Jet",jet_eta,jet_phi
     return None
 
-def FillVectorShallowTag(shallowTag_source,variables, jetVarNames,trkVarNames,runAOD = True, offline = False, mc = False, debug = False):
+def FillVectorShallowTag(shallowTag_source,variables, jetVarNames,trkVarNames,runAOD = False, offline = False, mc = False, debug = False):
     if debug: print "In FillVectorShallowTag"
 
     for vMember in variables.listVectorMembers:
@@ -100,7 +100,7 @@ def FillVectorShallowTag(shallowTag_source,variables, jetVarNames,trkVarNames,ru
 
 
 
-def FillVector(source,variables,minPt=pt_min, runAOD = True, offline = False, mc = False, debug=False):
+def FillVector(source,variables,minPt=pt_min, runAOD = False, offline = False, mc = False, debug=False):
     if debug:
         print "In FillVector before ",variables.pt
     variables.num[0] = 0
@@ -762,6 +762,12 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
     pfdeepbtag_source, pfdeepbtag_label                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPF:probb")
     pfShallowTag_source, pfShallowTag_label             = Handle("vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfos")
 
+#recoJetedmRefToBaseProdTofloatsAssociationVector_hIPTImTIP0p1 & hIPTImTIP0p3
+    pfdeepbtag_source_hIPTImTIP0p1, pfdeepbtag_label_hIPTImTIP0p1                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFhIPTImTIP0p1:probb")
+    pfShallowTag_source_hIPTImTIP0p1, pfShallowTag_label_hIPTImTIP0p1             = Handle("vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsPFhIPTImTIP0p1")
+    pfdeepbtag_source_hIPTImTIP0p3, pfdeepbtag_label_hIPTImTIP0p3                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFhIPTImTIP0p3:probb")
+    pfShallowTag_source_hIPTImTIP0p3, pfShallowTag_label_hIPTImTIP0p3             = Handle("vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsPFhIPTImTIP0p3")
+
     #pfdeepbtag_bb_source, pfdeepbtag_bb_label           = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>,edm::RefToBase<reco::Jet>,unsigned int,edm::helper::AssociationIdenticalKeyReference>"), ("hltDeepCombinedSecondaryVertexBJetTagsPF:probbb")
     #pfdeepbtag_udsg_source, pfdeepbtag_udsg_label       = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>,edm::RefToBase<reco::Jet>,unsigned int,edm::helper::AssociationIdenticalKeyReference>"), ("hltDeepCombinedSecondaryVertexBJetTagsPF:probudsg")
 
@@ -1029,6 +1035,11 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         #event.getByLabel(pfdeepbtag_udsg_label, pfdeepbtag_udsg_source)
         event.getByLabel(pfShallowTag_label, pfShallowTag_source)
 
+        event.getByLabel(pfdeepbtag_label_hIPTImTIP0p1, pfdeepbtag_source_hIPTImTIP0p1)
+        event.getByLabel(pfShallowTag_label_hIPTImTIP0p1, pfShallowTag_source_hIPTImTIP0p1)
+        event.getByLabel(pfdeepbtag_label_hIPTImTIP0p3, pfdeepbtag_source_hIPTImTIP0p3)
+        event.getByLabel(pfShallowTag_label_hIPTImTIP0p3, pfShallowTag_source_hIPTImTIP0p3)
+
         #print "getting offjets by label"
         event.getByLabel(offJets_label, offJets_source)
         event.getByLabel(offShallowTag_label, offShallowTag_source)
@@ -1162,6 +1173,7 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
                 FillVector(genMet_source,genMet, 0)
         """
         ####################################################
+        ##Edit this part to add the objects from the new paths to the tree
         ####################################################
         # Jets
         FillVector(caloJets_source,caloJets)
@@ -1188,6 +1200,8 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         #print "Filling pf btagging"
         csvbtagTouples_pf = getBJetValuesforFilling(pfbtag_source)
         deepcsvbtagTouples_pf = getBJetValuesforFilling(pfdeepbtag_source)
+        deepcsvbtagTouples_pf_hIPTImTIP0p1 = getBJetValuesforFilling(pfdeepbtag_source_hIPTImTIP0p1)
+        deepcsvbtagTouples_pf_hIPTImTIP0p3 = getBJetValuesforFilling(pfdeepbtag_source_hIPTImTIP0p3)
 
         #FillBtag(pfbtag_source, pfJets, pfJets.csv, pfJets.rankCSV,
         #         [CSVleadingPFJet, CSVsecondPFJet, CSVthirdPFJet, CSVfourthPFJet], nCSVPFgeZero)
@@ -1195,6 +1209,8 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         #FillBtag(pfdeepbtag_source, pfJets, pfJets.deepcsv, pfJets.rankDeepCSV,
         #         [DeepCSVleadingPFJet, DeepCSVsecondPFJet, DeepCSVthirdPFJet, DeepCSVfourthPFJet], nDeepCSVPFgeZero, debug = False)
         FillBtagAlt(deepcsvbtagTouples_pf, pfJets, pfJets.deepcsv, pfJets.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pf_hIPTImTIP0p1, pfJets, pfJets.deepcsv, pfJets.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pf_hIPTImTIP0p3, pfJets, pfJets.deepcsv, pfJets.rankDeepCSV)
         #FillBtag(pfdeepbtag_bb_source, pfJets, pfJets.deepcsv_bb)
         #FillBtag(pfdeepbtag_udsg_source, pfJets, pfJets.deepcsv_udsg)
         
