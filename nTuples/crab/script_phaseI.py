@@ -56,7 +56,7 @@ handle.close()
 ##replace files with crab ones
 #config.components[0].files=crabFiles
 
-launchNtupleFromHLT("tree.root",crabFiles,crabSecondaryFiles,maxEvents, LS = VLuminosityBlockRange, local = islocal, preProcessing=False)
+launchNtupleFromHLT("tree.root",crabFiles,crabSecondaryFiles,maxEvents, LS = VLuminosityBlockRange, local = islocal, preProcessing=True)
 
 #from PhysicsTools.HeppyCore.framework.looper import Looper
 #looper = Looper( 'Output', config, nPrint = 1)

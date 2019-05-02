@@ -13,18 +13,18 @@ Data = [
      ("/MuonEG/Run2017C-17Nov2017-v1/MINIAOD","/MuonEG/Run2017C-v1/RAW"),
      "_RunC",
      True],
-    ["HLT_Ntuple_BTagging_DiLepton_v10",
-     ("/MuonEG/Run2017D-17Nov2017-v1/MINIAOD","/MuonEG/Run2017D-v1/RAW"),
-     "_RunD",
-     True],
-    ["HLT_Ntuple_BTagging_DiLepton_v10",
-     ("/MuonEG/Run2017E-17Nov2017-v1/MINIAOD","/MuonEG/Run2017E-v1/RAW"),
-     "_RunE",
-     True],
-    ["HLT_Ntuple_BTagging_DiLepton_v10",
-     ("/MuonEG/Run2017F-17Nov2017-v1/MINIAOD","/MuonEG/Run2017F-v1/RAW"),
-     "_RunF",
-     True]
+#    ["HLT_Ntuple_BTagging_DiLepton_v10",
+#     ("/MuonEG/Run2017D-17Nov2017-v1/MINIAOD","/MuonEG/Run2017D-v1/RAW"),
+#     "_RunD",
+#     True],
+#    ["HLT_Ntuple_BTagging_DiLepton_v10",
+#     ("/MuonEG/Run2017E-17Nov2017-v1/MINIAOD","/MuonEG/Run2017E-v1/RAW"),
+#     "_RunE",
+#     True],
+#    ["HLT_Ntuple_BTagging_DiLepton_v10",
+#     ("/MuonEG/Run2017F-17Nov2017-v1/MINIAOD","/MuonEG/Run2017F-v1/RAW"),
+#     "_RunF",
+#     True]
 ]
 MC = [
     ["HLT_Ntuple_BTagging_DiLepton_v10",
@@ -33,22 +33,22 @@ MC = [
       "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIIFall17DRPremix-TSG_94X_mc2017_realistic_v11-v1/GEN-SIM-RAW"),
      "",
      False],
-    ["HLT_Ntuple_BTagging_DiLepton_v10",
-     #("/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/RunIISummer17DRStdmix-NZSFlatPU28to62_92X_upgrade2017_realistic_v10-v2/AODSIM",
-     ("/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAOD-TSG_94X_mc2017_realistic_v11-v1/MINIAODSIM",
-      "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIIFall17DRPremix-TSG_94X_mc2017_realistic_v11-v1/GEN-SIM-RAW"),
-     "",
-     False],
-    ["HLT_Ntuple_BTagging_DiLepton_v10",
-     ("/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM",
-      "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIIFall17DRPremix-PU2017_94X_mc2017_realistic_v11-v2/GEN-SIM-RAW"),
-     "",
-     False]
+#    ["HLT_Ntuple_BTagging_DiLepton_v10",
+#     #("/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/RunIISummer17DRStdmix-NZSFlatPU28to62_92X_upgrade2017_realistic_v10-v2/AODSIM",
+#     ("/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAOD-TSG_94X_mc2017_realistic_v11-v1/MINIAODSIM",
+#      "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIIFall17DRPremix-TSG_94X_mc2017_realistic_v11-v1/GEN-SIM-RAW"),
+#     "",
+#     False],
+#    ["HLT_Ntuple_BTagging_DiLepton_v10",
+#     ("/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM",
+#      "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIIFall17DRPremix-PU2017_94X_mc2017_realistic_v11-v2/GEN-SIM-RAW"),
+#     "",
+#     False]
 ]
 
 
-datasets = MC
-#datasets = Data
+#datasets = MC
+datasets = Data
 #datasets = [MC[1],MC[2]]
 #datasets = [Data[0]]
 print datasets
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
         config.Data.totalUnits = -1 #10*config.Data.unitsPerJob #FIXME: use -1
         #config.Data.outLFNDirBase = '/store/user/koschwei/onlineBTV/' + name + prefix
-        config.Data.outLFNDirBase = '/store/user/johnda/' + name + prefix
+        config.Data.outLFNDirBase = '/store/user/hkaveh/' + name + prefix
         config.Data.publication = True
         if dataset[3]:
             print "Using JSON"
@@ -125,7 +125,7 @@ if __name__ == '__main__':
         
         config.section_("Site")
         #config.Site.storageSite = "T2_CH_CSCS"
-        config.Site.storageSite = 'T3_US_FNALLPC' 
+        config.Site.storageSite = 'T2_DE_DESY' 
         #config.Site.storageSite = "T3_CH_PSI"
         print "submitting ",dataset
         crabCommand('submit',config = config)

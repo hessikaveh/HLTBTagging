@@ -43,7 +43,7 @@ def TaggedJet(jet, trackIPTagInfos ):
     print "No Match Jet",jet_eta,jet_phi
     return None
 
-def FillVectorShallowTag(shallowTag_source,variables, jetVarNames,trkVarNames,runAOD = False, offline = False, mc = False, debug = False):
+def FillVectorShallowTag(shallowTag_source,variables, jetVarNames,trkVarNames,runAOD = False, offline = False, mc = False, debug = True):
     if debug: print "In FillVectorShallowTag"
 
     for vMember in variables.listVectorMembers:
@@ -82,7 +82,9 @@ def FillVectorShallowTag(shallowTag_source,variables, jetVarNames,trkVarNames,ru
             #tagJetEta = tagVars.getList(getattr(ROOT.reco.btau,"jetEta"),False)[0]
             
             if debug: print "\ttagJetPhi",tagJetPhi,"tagJetEta",tagJetEta
-
+            if debug: 
+                for o in tagVars:
+                    print "b tagging parameters:", o.first , o.second
             if (tagJetPhi == thisPhi) and (tagJetEta == thisEta):
                 for jVar in jetVarNames:
                     thisJVar = tagVars.getList(getattr(ROOT.reco.btau,jVar),False)
@@ -158,7 +160,7 @@ def getBJetValuesforFilling_JetColl(btags_source):
     return bJets
     
 
-def FillBtagAlt(bTagTuples, jets, jet_btags, jet_btagsRank = None, JetIndexVars = None, nBtagsgeNull = None, debug = False):
+def FillBtagAlt(bTagTuples, jets, jet_btags, jet_btagsRank = None, JetIndexVars = None, nBtagsgeNull = None, debug = True):
     """
     In this function the btags_source product is called for every time it is needed.
     For some reason, if stored (e.g. btags = btags_source.productWithCheck()), the objects
@@ -167,7 +169,57 @@ def FillBtagAlt(bTagTuples, jets, jet_btags, jet_btagsRank = None, JetIndexVars 
     """
     if debug:
         print "Running FillBtag()"
-        print "Source is valid:",btags_source.isValid()
+        print bTagTuples
+        #print "Source is valid:",bTagTuples.isValid()
+    jetB = None
+    tagpairs = int(jets.num[0])*[(-1,-20)]
+    for i in range(jets.num[0]):
+        if debug:
+            print "processing jet {0}".format(i)
+        jet_btags[i] = -20.
+        dRmax = 0.1
+        matchcollJet = -1
+        ibjet = -1
+        for ibjet in range(len(bTagTuples)):
+            eta, phi, tag = bTagTuples[ibjet]
+            dR = deltaR(eta, phi,jets.eta[i],jets.phi[i])
+            if dR<dRmax:
+                jet_btags[i] = max(-1.0, tag)
+                tagpairs[i] = (i, jet_btags[i])
+                dRmax = dR
+                matchcollJet = ibjet
+        if debug:
+            if dRmax < dRmax:
+                print "Matched: btag coll jet {0} to online jet {1} with dR {2}".format(ibjet, i, dRmax)
+
+    if jet_btagsRank is not None:
+        if JetIndexVars is not None and isinstance(JetIndexVars, list):
+            for var in JetIndexVars:
+                var[0] = -1
+        if nBtagsgeNull is not None:
+            nBtagsgeNull[0] = 0
+        from operator import itemgetter
+        sortedtags = sorted(tagpairs,key=itemgetter(1), reverse=True) #This list is ordered by csv value, starting with the highest
+        for ipair, pair in enumerate(sortedtags):
+            jet_btagsRank[pair[0]] = ipair
+            if JetIndexVars is not None and isinstance(JetIndexVars, list):
+                if len(JetIndexVars) >= ipair+1:
+                    JetIndexVars[ipair][0] = pair[0]
+            if nBtagsgeNull is not None:
+                if pair[1] >= 0:
+                    nBtagsgeNull[0] += 1
+
+def FillBtagAltWLabel(bTagTuples, bTag_label, jets, jet_btags, jet_btagsRank = None, JetIndexVars = None, nBtagsgeNull = None, debug = True):
+    """
+    In this function the btags_source product is called for every time it is needed.
+    For some reason, if stored (e.g. btags = btags_source.productWithCheck()), the objects
+    start leaking in memory. Especially when getting the the referenced jet, this leads 
+    to segmentations violations.
+    """
+    if debug:
+        print "Running FillBtag()"
+        print bTag_label
+        print "Source is valid:",bTagTuples
     jetB = None
     tagpairs = int(jets.num[0])*[(-1,-20)]
     for i in range(jets.num[0]):
@@ -760,13 +812,15 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
 #recoJetedmRefToBaseProdTofloatsAssociationVector
     pfbtag_source, pfbtag_label                         = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltCombinedSecondaryVertexBJetTagsPF")
     pfdeepbtag_source, pfdeepbtag_label                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPF:probb")
-    pfShallowTag_source, pfShallowTag_label             = Handle("vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfos")
+    pfShallowTag_source, pfShallowTag_label             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfos")
 
-#recoJetedmRefToBaseProdTofloatsAssociationVector_hIPTImTIP0p1 & hIPTImTIP0p3
-    pfdeepbtag_source_hIPTImTIP0p1, pfdeepbtag_label_hIPTImTIP0p1                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFhIPTImTIP0p1:probb")
-    pfShallowTag_source_hIPTImTIP0p1, pfShallowTag_label_hIPTImTIP0p1             = Handle("vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsPFhIPTImTIP0p1")
-    pfdeepbtag_source_hIPTImTIP0p3, pfdeepbtag_label_hIPTImTIP0p3                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFhIPTImTIP0p3:probb")
-    pfShallowTag_source_hIPTImTIP0p3, pfShallowTag_label_hIPTImTIP0p3             = Handle("vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsPFhIPTImTIP0p3")
+    pfdeepbtag_sourcev1, pfdeepbtag_labelv1                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar1:probb")
+    pfShallowTag_sourcev1, pfShallowTag_labelv1             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar1")
+
+    pfdeepbtag_sourcev2, pfdeepbtag_labelv2                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar2:probb")
+    pfShallowTag_sourcev2, pfShallowTag_labelv2             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar2")
+
+
 
     #pfdeepbtag_bb_source, pfdeepbtag_bb_label           = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>,edm::RefToBase<reco::Jet>,unsigned int,edm::helper::AssociationIdenticalKeyReference>"), ("hltDeepCombinedSecondaryVertexBJetTagsPF:probbb")
     #pfdeepbtag_udsg_source, pfdeepbtag_udsg_label       = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>,edm::RefToBase<reco::Jet>,unsigned int,edm::helper::AssociationIdenticalKeyReference>"), ("hltDeepCombinedSecondaryVertexBJetTagsPF:probudsg")
@@ -931,6 +985,9 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
     #l1Jets              = BookVector(tree,"l1Jets",['pt','eta','phi','energy','matchOff','matchGen'])
     caloJets            = BookVector(tree,"caloJets",['pt','eta','phi','mass', 'energy','matchOff','matchGen','puId','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
     pfJets              = BookVector(tree,"pfJets",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+    pfJetsv1              = BookVector(tree,"pfJetsv1",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+    pfJetsv2              = BookVector(tree,"pfJetsv2",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
     offJets             = BookVector(tree,"offJets",['pt','eta','phi','mass', 'energy','csv','deepcsv','deepcsv_bb','deepcsv_b','deepcsv_udsg','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "matchPF", "matchCalo", "mcFlavour", "partonFlavour", "hadronFlavour", "lepOverlap04Tight"]+jetVars,trkVars)
     #offCleanJets        = BookVector(tree,"offCleanJets",['pt','eta','phi','mass', 'energy','csv','deepcsv','deepcsv_bb','deepcsv_b','deepcsv_udsg','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "matchPF", "matchCalo", "mcFlavour", "partonFlavour", "hadronFlavour", "lepOverlap04Tight", "offOrder"]+jetVars,trkVars)
     #offCleanCSVJets          = BookVector(tree,"offCleanCSVJets",['pt','eta','phi','mass', 'energy','csv','deepcsv','deepcsv_bb','deepcsv_b','deepcsv_udsg','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankpt", "matchPF", "matchCalo", "mcFlavour", "partonFlavour", "hadronFlavour", "lepOverlap04Tight"])
@@ -1035,10 +1092,11 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         #event.getByLabel(pfdeepbtag_udsg_label, pfdeepbtag_udsg_source)
         event.getByLabel(pfShallowTag_label, pfShallowTag_source)
 
-        event.getByLabel(pfdeepbtag_label_hIPTImTIP0p1, pfdeepbtag_source_hIPTImTIP0p1)
-        event.getByLabel(pfShallowTag_label_hIPTImTIP0p1, pfShallowTag_source_hIPTImTIP0p1)
-        event.getByLabel(pfdeepbtag_label_hIPTImTIP0p3, pfdeepbtag_source_hIPTImTIP0p3)
-        event.getByLabel(pfShallowTag_label_hIPTImTIP0p3, pfShallowTag_source_hIPTImTIP0p3)
+        event.getByLabel(pfdeepbtag_labelv1, pfdeepbtag_sourcev1)
+        event.getByLabel(pfShallowTag_labelv1, pfShallowTag_sourcev1)
+        event.getByLabel(pfdeepbtag_labelv2, pfdeepbtag_sourcev2)
+        event.getByLabel(pfShallowTag_labelv2, pfShallowTag_sourcev2)
+
 
         #print "getting offjets by label"
         event.getByLabel(offJets_label, offJets_source)
@@ -1179,8 +1237,18 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         FillVector(caloJets_source,caloJets)
         FillVectorShallowTag(caloShallowTag_source, caloJets, jetVars, trkVars)
 
+
         FillVector(pfJets_source,pfJets)
+
         FillVectorShallowTag(pfShallowTag_source, pfJets, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv1)
+        FillVectorShallowTag(pfShallowTag_sourcev1, pfJetsv1, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv2)
+        FillVectorShallowTag(pfShallowTag_sourcev2, pfJetsv2, jetVars, trkVars)
+
+
         #FillVector(l1Jets_source,l1Jets)
         FillVector(offJets_source,offJets,20, runAOD, offline = True, mc = isMC)
         FillVectorShallowTag(offShallowTag_source, offJets, jetVars, trkVars, debug=False)
@@ -1200,8 +1268,8 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         #print "Filling pf btagging"
         csvbtagTouples_pf = getBJetValuesforFilling(pfbtag_source)
         deepcsvbtagTouples_pf = getBJetValuesforFilling(pfdeepbtag_source)
-        deepcsvbtagTouples_pf_hIPTImTIP0p1 = getBJetValuesforFilling(pfdeepbtag_source_hIPTImTIP0p1)
-        deepcsvbtagTouples_pf_hIPTImTIP0p3 = getBJetValuesforFilling(pfdeepbtag_source_hIPTImTIP0p3)
+        deepcsvbtagTouples_pfv1 = getBJetValuesforFilling(pfdeepbtag_sourcev1)
+        deepcsvbtagTouples_pfv2 = getBJetValuesforFilling(pfdeepbtag_sourcev2)
 
         #FillBtag(pfbtag_source, pfJets, pfJets.csv, pfJets.rankCSV,
         #         [CSVleadingPFJet, CSVsecondPFJet, CSVthirdPFJet, CSVfourthPFJet], nCSVPFgeZero)
@@ -1209,8 +1277,9 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         #FillBtag(pfdeepbtag_source, pfJets, pfJets.deepcsv, pfJets.rankDeepCSV,
         #         [DeepCSVleadingPFJet, DeepCSVsecondPFJet, DeepCSVthirdPFJet, DeepCSVfourthPFJet], nDeepCSVPFgeZero, debug = False)
         FillBtagAlt(deepcsvbtagTouples_pf, pfJets, pfJets.deepcsv, pfJets.rankDeepCSV)
-        FillBtagAlt(deepcsvbtagTouples_pf_hIPTImTIP0p1, pfJets, pfJets.deepcsv, pfJets.rankDeepCSV)
-        FillBtagAlt(deepcsvbtagTouples_pf_hIPTImTIP0p3, pfJets, pfJets.deepcsv, pfJets.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv1, pfJetsv1, pfJetsv1.deepcsv, pfJetsv1.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv2, pfJetsv2, pfJetsv2.deepcsv, pfJetsv2.rankDeepCSV)
+
         #FillBtag(pfdeepbtag_bb_source, pfJets, pfJets.deepcsv_bb)
         #FillBtag(pfdeepbtag_udsg_source, pfJets, pfJets.deepcsv_udsg)
         
