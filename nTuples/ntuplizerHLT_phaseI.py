@@ -43,7 +43,7 @@ def TaggedJet(jet, trackIPTagInfos ):
     print "No Match Jet",jet_eta,jet_phi
     return None
 
-def FillVectorShallowTag(shallowTag_source,variables, jetVarNames,trkVarNames,runAOD = False, offline = False, mc = False, debug = True):
+def FillVectorShallowTag(shallowTag_source,variables, jetVarNames,trkVarNames,runAOD = False, offline = False, mc = False, debug = False):
     if debug: print "In FillVectorShallowTag"
 
     for vMember in variables.listVectorMembers:
@@ -160,7 +160,7 @@ def getBJetValuesforFilling_JetColl(btags_source):
     return bJets
     
 
-def FillBtagAlt(bTagTuples, jets, jet_btags, jet_btagsRank = None, JetIndexVars = None, nBtagsgeNull = None, debug = True):
+def FillBtagAlt(bTagTuples, jets, jet_btags, jet_btagsRank = None, JetIndexVars = None, nBtagsgeNull = None, debug = False):
     """
     In this function the btags_source product is called for every time it is needed.
     For some reason, if stored (e.g. btags = btags_source.productWithCheck()), the objects
@@ -209,7 +209,7 @@ def FillBtagAlt(bTagTuples, jets, jet_btags, jet_btagsRank = None, JetIndexVars 
                 if pair[1] >= 0:
                     nBtagsgeNull[0] += 1
 
-def FillBtagAltWLabel(bTagTuples, bTag_label, jets, jet_btags, jet_btagsRank = None, JetIndexVars = None, nBtagsgeNull = None, debug = True):
+def FillBtagAltWLabel(bTagTuples, bTag_label, jets, jet_btags, jet_btagsRank = None, JetIndexVars = None, nBtagsgeNull = None, debug = False):
     """
     In this function the btags_source product is called for every time it is needed.
     For some reason, if stored (e.g. btags = btags_source.productWithCheck()), the objects
@@ -820,6 +820,155 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
     pfdeepbtag_sourcev2, pfdeepbtag_labelv2                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar2:probb")
     pfShallowTag_sourcev2, pfShallowTag_labelv2             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar2")
 
+    pfdeepbtag_sourcev3, pfdeepbtag_labelv3                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar3:probb")
+    pfShallowTag_sourcev3, pfShallowTag_labelv3             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar3")
+
+    pfdeepbtag_sourcev4, pfdeepbtag_labelv4                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar4:probb")
+    pfShallowTag_sourcev4, pfShallowTag_labelv4             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar4")
+
+    pfdeepbtag_sourcev5, pfdeepbtag_labelv5                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar5:probb")
+    pfShallowTag_sourcev5, pfShallowTag_labelv5             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar5")
+
+    pfdeepbtag_sourcev6, pfdeepbtag_labelv6                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar6:probb")
+    pfShallowTag_sourcev6, pfShallowTag_labelv6             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar6")
+
+    pfdeepbtag_sourcev7, pfdeepbtag_labelv7                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar7:probb")
+    pfShallowTag_sourcev7, pfShallowTag_labelv7             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar7")
+
+    pfdeepbtag_sourcev8, pfdeepbtag_labelv8                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar8:probb")
+    pfShallowTag_sourcev8, pfShallowTag_labelv8             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar8")
+
+    pfdeepbtag_sourcev9, pfdeepbtag_labelv9                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar9:probb")
+    pfShallowTag_sourcev9, pfShallowTag_labelv9             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar9")
+
+    pfdeepbtag_sourcev10, pfdeepbtag_labelv10                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar10:probb")
+    pfShallowTag_sourcev10, pfShallowTag_labelv10             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar10")
+
+    pfdeepbtag_sourcev11, pfdeepbtag_labelv11                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar11:probb")
+    pfShallowTag_sourcev11, pfShallowTag_labelv11             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar11")
+
+    pfdeepbtag_sourcev12, pfdeepbtag_labelv12                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar12:probb")
+    pfShallowTag_sourcev12, pfShallowTag_labelv12             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar12")
+
+    pfdeepbtag_sourcev13, pfdeepbtag_labelv13                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar13:probb")
+    pfShallowTag_sourcev13, pfShallowTag_labelv13             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar13")
+
+    pfdeepbtag_sourcev14, pfdeepbtag_labelv14                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar14:probb")
+    pfShallowTag_sourcev14, pfShallowTag_labelv14             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar14")
+
+    pfdeepbtag_sourcev15, pfdeepbtag_labelv15                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar15:probb")
+    pfShallowTag_sourcev15, pfShallowTag_labelv15             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar15")
+
+    pfdeepbtag_sourcev16, pfdeepbtag_labelv16                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar16:probb")
+    pfShallowTag_sourcev16, pfShallowTag_labelv16             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar16")
+
+    pfdeepbtag_sourcev17, pfdeepbtag_labelv17                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar17:probb")
+    pfShallowTag_sourcev17, pfShallowTag_labelv17             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar17")
+
+    pfdeepbtag_sourcev18, pfdeepbtag_labelv18                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar18:probb")
+    pfShallowTag_sourcev18, pfShallowTag_labelv18             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar18")
+
+    pfdeepbtag_sourcev19, pfdeepbtag_labelv19                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar19:probb")
+    pfShallowTag_sourcev19, pfShallowTag_labelv19             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar19")
+
+
+
+    pfdeepbtag_sourcev20, pfdeepbtag_labelv20                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar20:probb")
+    pfShallowTag_sourcev20, pfShallowTag_labelv20             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar20")
+
+    pfdeepbtag_sourcev21, pfdeepbtag_labelv21                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar21:probb")
+    pfShallowTag_sourcev21, pfShallowTag_labelv21             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar21")
+
+    pfdeepbtag_sourcev22, pfdeepbtag_labelv22                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar22:probb")
+    pfShallowTag_sourcev22, pfShallowTag_labelv22             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar22")
+
+    pfdeepbtag_sourcev23, pfdeepbtag_labelv23                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar23:probb")
+    pfShallowTag_sourcev23, pfShallowTag_labelv23             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar23")
+
+    pfdeepbtag_sourcev24, pfdeepbtag_labelv24                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar24:probb")
+    pfShallowTag_sourcev24, pfShallowTag_labelv24             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar24")
+
+    pfdeepbtag_sourcev25, pfdeepbtag_labelv25                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar25:probb")
+    pfShallowTag_sourcev25, pfShallowTag_labelv25             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar25")
+
+    pfdeepbtag_sourcev26, pfdeepbtag_labelv26                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar26:probb")
+    pfShallowTag_sourcev26, pfShallowTag_labelv26             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar26")
+
+    pfdeepbtag_sourcev27, pfdeepbtag_labelv27                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar27:probb")
+    pfShallowTag_sourcev27, pfShallowTag_labelv27             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar27")
+
+    pfdeepbtag_sourcev28, pfdeepbtag_labelv28                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar28:probb")
+    pfShallowTag_sourcev28, pfShallowTag_labelv28             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar28")
+
+    pfdeepbtag_sourcev29, pfdeepbtag_labelv29                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar29:probb")
+    pfShallowTag_sourcev29, pfShallowTag_labelv29             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar29")
+
+    pfdeepbtag_sourcev30, pfdeepbtag_labelv30                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar30:probb")
+    pfShallowTag_sourcev30, pfShallowTag_labelv30             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar30")
+
+    pfdeepbtag_sourcev31, pfdeepbtag_labelv31                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar31:probb")
+    pfShallowTag_sourcev31, pfShallowTag_labelv31             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar31")
+
+    pfdeepbtag_sourcev32, pfdeepbtag_labelv32                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar32:probb")
+    pfShallowTag_sourcev32, pfShallowTag_labelv32             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar32")
+
+    pfdeepbtag_sourcev33, pfdeepbtag_labelv33                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar33:probb")
+    pfShallowTag_sourcev33, pfShallowTag_labelv33             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar33")
+
+    pfdeepbtag_sourcev34, pfdeepbtag_labelv34                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar34:probb")
+    pfShallowTag_sourcev34, pfShallowTag_labelv34             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar34")
+
+    pfdeepbtag_sourcev35, pfdeepbtag_labelv35                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar35:probb")
+    pfShallowTag_sourcev35, pfShallowTag_labelv35             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar35")
+
+    pfdeepbtag_sourcev36, pfdeepbtag_labelv36                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar36:probb")
+    pfShallowTag_sourcev36, pfShallowTag_labelv36             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar36")
+
+    pfdeepbtag_sourcev37, pfdeepbtag_labelv37                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar37:probb")
+    pfShallowTag_sourcev37, pfShallowTag_labelv37             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar37")
+
+    pfdeepbtag_sourcev38, pfdeepbtag_labelv38                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar38:probb")
+    pfShallowTag_sourcev38, pfShallowTag_labelv38             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar38")
+
+    pfdeepbtag_sourcev39, pfdeepbtag_labelv39                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar39:probb")
+    pfShallowTag_sourcev39, pfShallowTag_labelv39             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar39")
+
+    pfdeepbtag_sourcev40, pfdeepbtag_labelv40                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar40:probb")
+    pfShallowTag_sourcev40, pfShallowTag_labelv40             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar40")
+
+    pfdeepbtag_sourcev41, pfdeepbtag_labelv41                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar41:probb")
+    pfShallowTag_sourcev41, pfShallowTag_labelv41             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar41")
+
+    pfdeepbtag_sourcev42, pfdeepbtag_labelv42                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar42:probb")
+    pfShallowTag_sourcev42, pfShallowTag_labelv42             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar42")
+
+    pfdeepbtag_sourcev43, pfdeepbtag_labelv43                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar43:probb")
+    pfShallowTag_sourcev43, pfShallowTag_labelv43             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar43")
+
+    pfdeepbtag_sourcev44, pfdeepbtag_labelv44                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar44:probb")
+    pfShallowTag_sourcev44, pfShallowTag_labelv44             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar44")
+
+    pfdeepbtag_sourcev45, pfdeepbtag_labelv45                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar45:probb")
+    pfShallowTag_sourcev45, pfShallowTag_labelv45             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar45")
+
+    pfdeepbtag_sourcev46, pfdeepbtag_labelv46                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar46:probb")
+    pfShallowTag_sourcev46, pfShallowTag_labelv46             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar46")
+
+    pfdeepbtag_sourcev47, pfdeepbtag_labelv47                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar47:probb")
+    pfShallowTag_sourcev47, pfShallowTag_labelv47             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar47")
+
+    pfdeepbtag_sourcev48, pfdeepbtag_labelv48                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar48:probb")
+    pfShallowTag_sourcev48, pfShallowTag_labelv48             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar48")
+
+    pfdeepbtag_sourcev49, pfdeepbtag_labelv49                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar49:probb")
+    pfShallowTag_sourcev49, pfShallowTag_labelv49             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar49")
+
+    pfdeepbtag_sourcev50, pfdeepbtag_labelv50                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar50:probb")
+    pfShallowTag_sourcev50, pfShallowTag_labelv50             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar50")
+
+    pfdeepbtag_sourcev51, pfdeepbtag_labelv51                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar51:probb")
+    pfShallowTag_sourcev51, pfShallowTag_labelv51             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar51")
+
 
 
     #pfdeepbtag_bb_source, pfdeepbtag_bb_label           = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>,edm::RefToBase<reco::Jet>,unsigned int,edm::helper::AssociationIdenticalKeyReference>"), ("hltDeepCombinedSecondaryVertexBJetTagsPF:probbb")
@@ -988,6 +1137,102 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
     pfJetsv1              = BookVector(tree,"pfJetsv1",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
     pfJetsv2              = BookVector(tree,"pfJetsv2",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
 
+    pfJetsv3              = BookVector(tree,"pfJetsv3",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv4              = BookVector(tree,"pfJetsv4",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv5              = BookVector(tree,"pfJetsv5",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv6              = BookVector(tree,"pfJetsv6",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv7              = BookVector(tree,"pfJetsv7",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv8              = BookVector(tree,"pfJetsv8",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv9              = BookVector(tree,"pfJetsv9",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv10              = BookVector(tree,"pfJetsv10",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+
+    pfJetsv11              = BookVector(tree,"pfJetsv11",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+    pfJetsv12              = BookVector(tree,"pfJetsv12",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv13              = BookVector(tree,"pfJetsv13",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv14              = BookVector(tree,"pfJetsv14",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv15              = BookVector(tree,"pfJetsv15",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv16              = BookVector(tree,"pfJetsv16",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv17              = BookVector(tree,"pfJetsv17",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv18              = BookVector(tree,"pfJetsv18",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv19              = BookVector(tree,"pfJetsv19",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv20              = BookVector(tree,"pfJetsv20",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv21              = BookVector(tree,"pfJetsv21",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+    pfJetsv22              = BookVector(tree,"pfJetsv22",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv23              = BookVector(tree,"pfJetsv23",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv24              = BookVector(tree,"pfJetsv24",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv25              = BookVector(tree,"pfJetsv25",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv26              = BookVector(tree,"pfJetsv26",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv27              = BookVector(tree,"pfJetsv27",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv28              = BookVector(tree,"pfJetsv28",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv29              = BookVector(tree,"pfJetsv29",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv30              = BookVector(tree,"pfJetsv30",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv31              = BookVector(tree,"pfJetsv31",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+    pfJetsv32              = BookVector(tree,"pfJetsv32",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv33              = BookVector(tree,"pfJetsv33",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv34              = BookVector(tree,"pfJetsv34",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv35              = BookVector(tree,"pfJetsv35",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv36              = BookVector(tree,"pfJetsv36",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv37              = BookVector(tree,"pfJetsv37",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv38              = BookVector(tree,"pfJetsv38",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv39              = BookVector(tree,"pfJetsv39",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv40              = BookVector(tree,"pfJetsv40",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv41              = BookVector(tree,"pfJetsv41",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+    pfJetsv42              = BookVector(tree,"pfJetsv42",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv43              = BookVector(tree,"pfJetsv43",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv44              = BookVector(tree,"pfJetsv44",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv45              = BookVector(tree,"pfJetsv45",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv46              = BookVector(tree,"pfJetsv46",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv47              = BookVector(tree,"pfJetsv47",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv48              = BookVector(tree,"pfJetsv48",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv49              = BookVector(tree,"pfJetsv49",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv50              = BookVector(tree,"pfJetsv50",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv51              = BookVector(tree,"pfJetsv51",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+
     offJets             = BookVector(tree,"offJets",['pt','eta','phi','mass', 'energy','csv','deepcsv','deepcsv_bb','deepcsv_b','deepcsv_udsg','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "matchPF", "matchCalo", "mcFlavour", "partonFlavour", "hadronFlavour", "lepOverlap04Tight"]+jetVars,trkVars)
     #offCleanJets        = BookVector(tree,"offCleanJets",['pt','eta','phi','mass', 'energy','csv','deepcsv','deepcsv_bb','deepcsv_b','deepcsv_udsg','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "matchPF", "matchCalo", "mcFlavour", "partonFlavour", "hadronFlavour", "lepOverlap04Tight", "offOrder"]+jetVars,trkVars)
     #offCleanCSVJets          = BookVector(tree,"offCleanCSVJets",['pt','eta','phi','mass', 'energy','csv','deepcsv','deepcsv_bb','deepcsv_b','deepcsv_udsg','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankpt", "matchPF", "matchCalo", "mcFlavour", "partonFlavour", "hadronFlavour", "lepOverlap04Tight"])
@@ -1096,6 +1341,108 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         event.getByLabel(pfShallowTag_labelv1, pfShallowTag_sourcev1)
         event.getByLabel(pfdeepbtag_labelv2, pfdeepbtag_sourcev2)
         event.getByLabel(pfShallowTag_labelv2, pfShallowTag_sourcev2)
+        event.getByLabel(pfdeepbtag_labelv3, pfdeepbtag_sourcev3)
+        event.getByLabel(pfShallowTag_labelv3, pfShallowTag_sourcev3)
+        event.getByLabel(pfdeepbtag_labelv4, pfdeepbtag_sourcev4)
+        event.getByLabel(pfShallowTag_labelv4, pfShallowTag_sourcev4)
+        event.getByLabel(pfdeepbtag_labelv5, pfdeepbtag_sourcev5)
+        event.getByLabel(pfShallowTag_labelv5, pfShallowTag_sourcev5)
+        event.getByLabel(pfdeepbtag_labelv6, pfdeepbtag_sourcev6)
+        event.getByLabel(pfShallowTag_labelv6, pfShallowTag_sourcev6)
+        event.getByLabel(pfdeepbtag_labelv7, pfdeepbtag_sourcev7)
+        event.getByLabel(pfShallowTag_labelv7, pfShallowTag_sourcev7)
+        event.getByLabel(pfdeepbtag_labelv8, pfdeepbtag_sourcev8)
+        event.getByLabel(pfShallowTag_labelv8, pfShallowTag_sourcev8)
+        event.getByLabel(pfdeepbtag_labelv9, pfdeepbtag_sourcev9)
+        event.getByLabel(pfShallowTag_labelv9, pfShallowTag_sourcev9)
+        event.getByLabel(pfdeepbtag_labelv10, pfdeepbtag_sourcev10)
+        event.getByLabel(pfShallowTag_labelv10, pfShallowTag_sourcev10)
+
+        event.getByLabel(pfdeepbtag_labelv11, pfdeepbtag_sourcev11)
+        event.getByLabel(pfShallowTag_labelv11, pfShallowTag_sourcev11)
+        event.getByLabel(pfdeepbtag_labelv12, pfdeepbtag_sourcev12)
+        event.getByLabel(pfShallowTag_labelv12, pfShallowTag_sourcev12)
+        event.getByLabel(pfdeepbtag_labelv13, pfdeepbtag_sourcev13)
+        event.getByLabel(pfShallowTag_labelv13, pfShallowTag_sourcev13)
+        event.getByLabel(pfdeepbtag_labelv14, pfdeepbtag_sourcev14)
+        event.getByLabel(pfShallowTag_labelv14, pfShallowTag_sourcev14)
+        event.getByLabel(pfdeepbtag_labelv15, pfdeepbtag_sourcev15)
+        event.getByLabel(pfShallowTag_labelv15, pfShallowTag_sourcev15)
+        event.getByLabel(pfdeepbtag_labelv16, pfdeepbtag_sourcev16)
+        event.getByLabel(pfShallowTag_labelv16, pfShallowTag_sourcev16)
+        event.getByLabel(pfdeepbtag_labelv17, pfdeepbtag_sourcev17)
+        event.getByLabel(pfShallowTag_labelv17, pfShallowTag_sourcev17)
+        event.getByLabel(pfdeepbtag_labelv18, pfdeepbtag_sourcev18)
+        event.getByLabel(pfShallowTag_labelv18, pfShallowTag_sourcev18)
+        event.getByLabel(pfdeepbtag_labelv19, pfdeepbtag_sourcev19)
+        event.getByLabel(pfShallowTag_labelv19, pfShallowTag_sourcev19)
+        event.getByLabel(pfdeepbtag_labelv20, pfdeepbtag_sourcev20)
+        event.getByLabel(pfShallowTag_labelv20, pfShallowTag_sourcev20)
+
+        event.getByLabel(pfdeepbtag_labelv21, pfdeepbtag_sourcev21)
+        event.getByLabel(pfShallowTag_labelv21, pfShallowTag_sourcev21)
+        event.getByLabel(pfdeepbtag_labelv22, pfdeepbtag_sourcev22)
+        event.getByLabel(pfShallowTag_labelv22, pfShallowTag_sourcev22)
+        event.getByLabel(pfdeepbtag_labelv23, pfdeepbtag_sourcev23)
+        event.getByLabel(pfShallowTag_labelv23, pfShallowTag_sourcev23)
+        event.getByLabel(pfdeepbtag_labelv24, pfdeepbtag_sourcev24)
+        event.getByLabel(pfShallowTag_labelv24, pfShallowTag_sourcev24)
+        event.getByLabel(pfdeepbtag_labelv25, pfdeepbtag_sourcev25)
+        event.getByLabel(pfShallowTag_labelv25, pfShallowTag_sourcev25)
+        event.getByLabel(pfdeepbtag_labelv26, pfdeepbtag_sourcev26)
+        event.getByLabel(pfShallowTag_labelv26, pfShallowTag_sourcev26)
+        event.getByLabel(pfdeepbtag_labelv27, pfdeepbtag_sourcev27)
+        event.getByLabel(pfShallowTag_labelv27, pfShallowTag_sourcev27)
+        event.getByLabel(pfdeepbtag_labelv28, pfdeepbtag_sourcev28)
+        event.getByLabel(pfShallowTag_labelv28, pfShallowTag_sourcev28)
+        event.getByLabel(pfdeepbtag_labelv29, pfdeepbtag_sourcev29)
+        event.getByLabel(pfShallowTag_labelv29, pfShallowTag_sourcev29)
+        event.getByLabel(pfdeepbtag_labelv30, pfdeepbtag_sourcev30)
+        event.getByLabel(pfShallowTag_labelv30, pfShallowTag_sourcev30)
+
+        event.getByLabel(pfdeepbtag_labelv31, pfdeepbtag_sourcev31)
+        event.getByLabel(pfShallowTag_labelv31, pfShallowTag_sourcev31)
+        event.getByLabel(pfdeepbtag_labelv32, pfdeepbtag_sourcev32)
+        event.getByLabel(pfShallowTag_labelv32, pfShallowTag_sourcev32)
+        event.getByLabel(pfdeepbtag_labelv33, pfdeepbtag_sourcev33)
+        event.getByLabel(pfShallowTag_labelv33, pfShallowTag_sourcev33)
+        event.getByLabel(pfdeepbtag_labelv34, pfdeepbtag_sourcev34)
+        event.getByLabel(pfShallowTag_labelv34, pfShallowTag_sourcev34)
+        event.getByLabel(pfdeepbtag_labelv35, pfdeepbtag_sourcev35)
+        event.getByLabel(pfShallowTag_labelv35, pfShallowTag_sourcev35)
+        event.getByLabel(pfdeepbtag_labelv36, pfdeepbtag_sourcev36)
+        event.getByLabel(pfShallowTag_labelv36, pfShallowTag_sourcev36)
+        event.getByLabel(pfdeepbtag_labelv37, pfdeepbtag_sourcev37)
+        event.getByLabel(pfShallowTag_labelv37, pfShallowTag_sourcev37)
+        event.getByLabel(pfdeepbtag_labelv38, pfdeepbtag_sourcev38)
+        event.getByLabel(pfShallowTag_labelv38, pfShallowTag_sourcev38)
+        event.getByLabel(pfdeepbtag_labelv39, pfdeepbtag_sourcev39)
+        event.getByLabel(pfShallowTag_labelv39, pfShallowTag_sourcev39)
+        event.getByLabel(pfdeepbtag_labelv40, pfdeepbtag_sourcev40)
+        event.getByLabel(pfShallowTag_labelv40, pfShallowTag_sourcev40)
+
+        event.getByLabel(pfdeepbtag_labelv41, pfdeepbtag_sourcev41)
+        event.getByLabel(pfShallowTag_labelv41, pfShallowTag_sourcev41)
+        event.getByLabel(pfdeepbtag_labelv42, pfdeepbtag_sourcev42)
+        event.getByLabel(pfShallowTag_labelv42, pfShallowTag_sourcev42)
+        event.getByLabel(pfdeepbtag_labelv43, pfdeepbtag_sourcev43)
+        event.getByLabel(pfShallowTag_labelv43, pfShallowTag_sourcev43)
+        event.getByLabel(pfdeepbtag_labelv44, pfdeepbtag_sourcev44)
+        event.getByLabel(pfShallowTag_labelv44, pfShallowTag_sourcev44)
+        event.getByLabel(pfdeepbtag_labelv45, pfdeepbtag_sourcev45)
+        event.getByLabel(pfShallowTag_labelv45, pfShallowTag_sourcev45)
+        event.getByLabel(pfdeepbtag_labelv46, pfdeepbtag_sourcev46)
+        event.getByLabel(pfShallowTag_labelv46, pfShallowTag_sourcev46)
+        event.getByLabel(pfdeepbtag_labelv47, pfdeepbtag_sourcev47)
+        event.getByLabel(pfShallowTag_labelv47, pfShallowTag_sourcev47)
+        event.getByLabel(pfdeepbtag_labelv48, pfdeepbtag_sourcev48)
+        event.getByLabel(pfShallowTag_labelv48, pfShallowTag_sourcev48)
+        event.getByLabel(pfdeepbtag_labelv49, pfdeepbtag_sourcev49)
+        event.getByLabel(pfShallowTag_labelv49, pfShallowTag_sourcev49)
+        event.getByLabel(pfdeepbtag_labelv50, pfdeepbtag_sourcev50)
+        event.getByLabel(pfShallowTag_labelv50, pfShallowTag_sourcev50)
+        event.getByLabel(pfdeepbtag_labelv51, pfdeepbtag_sourcev51)
+        event.getByLabel(pfShallowTag_labelv51, pfShallowTag_sourcev51)
 
 
         #print "getting offjets by label"
@@ -1247,6 +1594,122 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
 
         FillVector(pfJets_source,pfJetsv2)
         FillVectorShallowTag(pfShallowTag_sourcev2, pfJetsv2, jetVars, trkVars)
+        
+        FillVector(pfJets_source,pfJetsv3)
+        FillVectorShallowTag(pfShallowTag_sourcev3, pfJetsv3, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv4)
+        FillVectorShallowTag(pfShallowTag_sourcev4, pfJetsv4, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv5)
+        FillVectorShallowTag(pfShallowTag_sourcev5, pfJetsv5, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv6)
+        FillVectorShallowTag(pfShallowTag_sourcev6, pfJetsv6, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv7)
+        FillVectorShallowTag(pfShallowTag_sourcev7, pfJetsv7, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv8)
+        FillVectorShallowTag(pfShallowTag_sourcev8, pfJetsv8, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv9)
+        FillVectorShallowTag(pfShallowTag_sourcev9, pfJetsv9, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv10)
+        FillVectorShallowTag(pfShallowTag_sourcev10, pfJetsv10, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv11)
+        FillVectorShallowTag(pfShallowTag_sourcev11, pfJetsv11, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv12)
+        FillVectorShallowTag(pfShallowTag_sourcev12, pfJetsv12, jetVars, trkVars)
+        
+        FillVector(pfJets_source,pfJetsv13)
+        FillVectorShallowTag(pfShallowTag_sourcev13, pfJetsv13, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv14)
+        FillVectorShallowTag(pfShallowTag_sourcev14, pfJetsv14, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv15)
+        FillVectorShallowTag(pfShallowTag_sourcev15, pfJetsv15, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv16)
+        FillVectorShallowTag(pfShallowTag_sourcev16, pfJetsv16, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv17)
+        FillVectorShallowTag(pfShallowTag_sourcev17, pfJetsv17, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv18)
+        FillVectorShallowTag(pfShallowTag_sourcev18, pfJetsv18, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv19)
+        FillVectorShallowTag(pfShallowTag_sourcev19, pfJetsv19, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv20)
+        FillVectorShallowTag(pfShallowTag_sourcev20, pfJetsv20, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv21)
+        FillVectorShallowTag(pfShallowTag_sourcev21, pfJetsv21, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv22)
+        FillVectorShallowTag(pfShallowTag_sourcev22, pfJetsv22, jetVars, trkVars)
+        
+        FillVector(pfJets_source,pfJetsv23)
+        FillVectorShallowTag(pfShallowTag_sourcev23, pfJetsv23, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv24)
+        FillVectorShallowTag(pfShallowTag_sourcev24, pfJetsv24, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv25)
+        FillVectorShallowTag(pfShallowTag_sourcev25, pfJetsv25, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv26)
+        FillVectorShallowTag(pfShallowTag_sourcev26, pfJetsv26, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv27)
+        FillVectorShallowTag(pfShallowTag_sourcev27, pfJetsv27, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv28)
+        FillVectorShallowTag(pfShallowTag_sourcev28, pfJetsv28, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv29)
+        FillVectorShallowTag(pfShallowTag_sourcev29, pfJetsv29, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv30)
+        FillVectorShallowTag(pfShallowTag_sourcev30, pfJetsv30, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv31)
+        FillVectorShallowTag(pfShallowTag_sourcev31, pfJetsv31, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv32)
+        FillVectorShallowTag(pfShallowTag_sourcev32, pfJetsv32, jetVars, trkVars)
+        
+        FillVector(pfJets_source,pfJetsv33)
+        FillVectorShallowTag(pfShallowTag_sourcev33, pfJetsv33, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv34)
+        FillVectorShallowTag(pfShallowTag_sourcev34, pfJetsv34, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv35)
+        FillVectorShallowTag(pfShallowTag_sourcev35, pfJetsv35, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv36)
+        FillVectorShallowTag(pfShallowTag_sourcev36, pfJetsv36, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv37)
+        FillVectorShallowTag(pfShallowTag_sourcev37, pfJetsv37, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv38)
+        FillVectorShallowTag(pfShallowTag_sourcev38, pfJetsv38, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv39)
+        FillVectorShallowTag(pfShallowTag_sourcev39, pfJetsv39, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv40)
+        FillVectorShallowTag(pfShallowTag_sourcev40, pfJetsv40, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv41)
+        FillVectorShallowTag(pfShallowTag_sourcev41, pfJetsv41, jetVars, trkVars)
+
+        FillVector(pfJets_source,pfJetsv42)
+        FillVectorShallowTag(pfShallowTag_sourcev42, pfJetsv42, jetVars, trkVars)
+        
+        FillVector(pfJets_source,pfJetsv43)
+        FillVectorShallowTag(pfShallowTag_sourcev43, pfJetsv43, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv44)
+        FillVectorShallowTag(pfShallowTag_sourcev44, pfJetsv44, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv45)
+        FillVectorShallowTag(pfShallowTag_sourcev45, pfJetsv45, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv46)
+        FillVectorShallowTag(pfShallowTag_sourcev46, pfJetsv46, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv47)
+        FillVectorShallowTag(pfShallowTag_sourcev47, pfJetsv47, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv48)
+        FillVectorShallowTag(pfShallowTag_sourcev48, pfJetsv48, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv49)
+        FillVectorShallowTag(pfShallowTag_sourcev49, pfJetsv49, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv50)
+        FillVectorShallowTag(pfShallowTag_sourcev50, pfJetsv50, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv51)
+        FillVectorShallowTag(pfShallowTag_sourcev51, pfJetsv51, jetVars, trkVars)
+
+
+
+
+
 
 
         #FillVector(l1Jets_source,l1Jets)
@@ -1270,6 +1733,61 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         deepcsvbtagTouples_pf = getBJetValuesforFilling(pfdeepbtag_source)
         deepcsvbtagTouples_pfv1 = getBJetValuesforFilling(pfdeepbtag_sourcev1)
         deepcsvbtagTouples_pfv2 = getBJetValuesforFilling(pfdeepbtag_sourcev2)
+        deepcsvbtagTouples_pfv3 = getBJetValuesforFilling(pfdeepbtag_sourcev3)
+        deepcsvbtagTouples_pfv4 = getBJetValuesforFilling(pfdeepbtag_sourcev4)
+        deepcsvbtagTouples_pfv5 = getBJetValuesforFilling(pfdeepbtag_sourcev5)
+        deepcsvbtagTouples_pfv6 = getBJetValuesforFilling(pfdeepbtag_sourcev6)
+        deepcsvbtagTouples_pfv7 = getBJetValuesforFilling(pfdeepbtag_sourcev7)
+        deepcsvbtagTouples_pfv8 = getBJetValuesforFilling(pfdeepbtag_sourcev8)
+        deepcsvbtagTouples_pfv9 = getBJetValuesforFilling(pfdeepbtag_sourcev9)
+        deepcsvbtagTouples_pfv10 = getBJetValuesforFilling(pfdeepbtag_sourcev10)
+
+        deepcsvbtagTouples_pfv11 = getBJetValuesforFilling(pfdeepbtag_sourcev11)
+        deepcsvbtagTouples_pfv12 = getBJetValuesforFilling(pfdeepbtag_sourcev12)
+        deepcsvbtagTouples_pfv13 = getBJetValuesforFilling(pfdeepbtag_sourcev13)
+        deepcsvbtagTouples_pfv14 = getBJetValuesforFilling(pfdeepbtag_sourcev14)
+        deepcsvbtagTouples_pfv15 = getBJetValuesforFilling(pfdeepbtag_sourcev15)
+        deepcsvbtagTouples_pfv16 = getBJetValuesforFilling(pfdeepbtag_sourcev16)
+        deepcsvbtagTouples_pfv17 = getBJetValuesforFilling(pfdeepbtag_sourcev17)
+        deepcsvbtagTouples_pfv18 = getBJetValuesforFilling(pfdeepbtag_sourcev18)
+        deepcsvbtagTouples_pfv19 = getBJetValuesforFilling(pfdeepbtag_sourcev19)
+        deepcsvbtagTouples_pfv20 = getBJetValuesforFilling(pfdeepbtag_sourcev20)
+
+        deepcsvbtagTouples_pfv21 = getBJetValuesforFilling(pfdeepbtag_sourcev21)
+        deepcsvbtagTouples_pfv22 = getBJetValuesforFilling(pfdeepbtag_sourcev22)
+        deepcsvbtagTouples_pfv23 = getBJetValuesforFilling(pfdeepbtag_sourcev23)
+        deepcsvbtagTouples_pfv24 = getBJetValuesforFilling(pfdeepbtag_sourcev24)
+        deepcsvbtagTouples_pfv25 = getBJetValuesforFilling(pfdeepbtag_sourcev25)
+        deepcsvbtagTouples_pfv26 = getBJetValuesforFilling(pfdeepbtag_sourcev26)
+        deepcsvbtagTouples_pfv27 = getBJetValuesforFilling(pfdeepbtag_sourcev27)
+        deepcsvbtagTouples_pfv28 = getBJetValuesforFilling(pfdeepbtag_sourcev28)
+        deepcsvbtagTouples_pfv29 = getBJetValuesforFilling(pfdeepbtag_sourcev29)
+        deepcsvbtagTouples_pfv30 = getBJetValuesforFilling(pfdeepbtag_sourcev30)
+
+        deepcsvbtagTouples_pfv31 = getBJetValuesforFilling(pfdeepbtag_sourcev31)
+        deepcsvbtagTouples_pfv32 = getBJetValuesforFilling(pfdeepbtag_sourcev32)
+        deepcsvbtagTouples_pfv33 = getBJetValuesforFilling(pfdeepbtag_sourcev33)
+        deepcsvbtagTouples_pfv34 = getBJetValuesforFilling(pfdeepbtag_sourcev34)
+        deepcsvbtagTouples_pfv35 = getBJetValuesforFilling(pfdeepbtag_sourcev35)
+        deepcsvbtagTouples_pfv36 = getBJetValuesforFilling(pfdeepbtag_sourcev36)
+        deepcsvbtagTouples_pfv37 = getBJetValuesforFilling(pfdeepbtag_sourcev37)
+        deepcsvbtagTouples_pfv38 = getBJetValuesforFilling(pfdeepbtag_sourcev38)
+        deepcsvbtagTouples_pfv39 = getBJetValuesforFilling(pfdeepbtag_sourcev39)
+        deepcsvbtagTouples_pfv40 = getBJetValuesforFilling(pfdeepbtag_sourcev40)
+
+        deepcsvbtagTouples_pfv41 = getBJetValuesforFilling(pfdeepbtag_sourcev41)
+        deepcsvbtagTouples_pfv42 = getBJetValuesforFilling(pfdeepbtag_sourcev42)
+        deepcsvbtagTouples_pfv43 = getBJetValuesforFilling(pfdeepbtag_sourcev43)
+        deepcsvbtagTouples_pfv44 = getBJetValuesforFilling(pfdeepbtag_sourcev44)
+        deepcsvbtagTouples_pfv45 = getBJetValuesforFilling(pfdeepbtag_sourcev45)
+        deepcsvbtagTouples_pfv46 = getBJetValuesforFilling(pfdeepbtag_sourcev46)
+        deepcsvbtagTouples_pfv47 = getBJetValuesforFilling(pfdeepbtag_sourcev47)
+        deepcsvbtagTouples_pfv48 = getBJetValuesforFilling(pfdeepbtag_sourcev48)
+        deepcsvbtagTouples_pfv49 = getBJetValuesforFilling(pfdeepbtag_sourcev49)
+        deepcsvbtagTouples_pfv50 = getBJetValuesforFilling(pfdeepbtag_sourcev50)
+        deepcsvbtagTouples_pfv51 = getBJetValuesforFilling(pfdeepbtag_sourcev51)
+
+
 
         #FillBtag(pfbtag_source, pfJets, pfJets.csv, pfJets.rankCSV,
         #         [CSVleadingPFJet, CSVsecondPFJet, CSVthirdPFJet, CSVfourthPFJet], nCSVPFgeZero)
@@ -1279,6 +1797,60 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         FillBtagAlt(deepcsvbtagTouples_pf, pfJets, pfJets.deepcsv, pfJets.rankDeepCSV)
         FillBtagAlt(deepcsvbtagTouples_pfv1, pfJetsv1, pfJetsv1.deepcsv, pfJetsv1.rankDeepCSV)
         FillBtagAlt(deepcsvbtagTouples_pfv2, pfJetsv2, pfJetsv2.deepcsv, pfJetsv2.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv3, pfJetsv3, pfJetsv3.deepcsv, pfJetsv3.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv4, pfJetsv4, pfJetsv4.deepcsv, pfJetsv4.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv5, pfJetsv5, pfJetsv5.deepcsv, pfJetsv5.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv6, pfJetsv6, pfJetsv6.deepcsv, pfJetsv6.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv7, pfJetsv7, pfJetsv7.deepcsv, pfJetsv7.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv8, pfJetsv8, pfJetsv8.deepcsv, pfJetsv8.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv9, pfJetsv9, pfJetsv9.deepcsv, pfJetsv9.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv10, pfJetsv10, pfJetsv10.deepcsv, pfJetsv10.rankDeepCSV)
+
+        FillBtagAlt(deepcsvbtagTouples_pfv11, pfJetsv11, pfJetsv11.deepcsv, pfJetsv11.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv12, pfJetsv12, pfJetsv12.deepcsv, pfJetsv12.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv13, pfJetsv13, pfJetsv13.deepcsv, pfJetsv13.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv14, pfJetsv14, pfJetsv14.deepcsv, pfJetsv14.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv15, pfJetsv15, pfJetsv15.deepcsv, pfJetsv15.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv16, pfJetsv16, pfJetsv16.deepcsv, pfJetsv16.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv17, pfJetsv17, pfJetsv17.deepcsv, pfJetsv17.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv18, pfJetsv18, pfJetsv18.deepcsv, pfJetsv18.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv19, pfJetsv19, pfJetsv19.deepcsv, pfJetsv19.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv20, pfJetsv20, pfJetsv20.deepcsv, pfJetsv20.rankDeepCSV)
+
+        FillBtagAlt(deepcsvbtagTouples_pfv21, pfJetsv21, pfJetsv21.deepcsv, pfJetsv21.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv22, pfJetsv22, pfJetsv22.deepcsv, pfJetsv22.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv23, pfJetsv23, pfJetsv23.deepcsv, pfJetsv23.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv24, pfJetsv24, pfJetsv24.deepcsv, pfJetsv24.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv25, pfJetsv25, pfJetsv25.deepcsv, pfJetsv25.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv26, pfJetsv26, pfJetsv26.deepcsv, pfJetsv26.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv27, pfJetsv27, pfJetsv27.deepcsv, pfJetsv27.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv28, pfJetsv28, pfJetsv28.deepcsv, pfJetsv28.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv29, pfJetsv29, pfJetsv29.deepcsv, pfJetsv29.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv30, pfJetsv30, pfJetsv30.deepcsv, pfJetsv30.rankDeepCSV)
+
+        FillBtagAlt(deepcsvbtagTouples_pfv31, pfJetsv31, pfJetsv31.deepcsv, pfJetsv31.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv32, pfJetsv32, pfJetsv32.deepcsv, pfJetsv32.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv33, pfJetsv33, pfJetsv33.deepcsv, pfJetsv33.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv34, pfJetsv34, pfJetsv34.deepcsv, pfJetsv34.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv35, pfJetsv35, pfJetsv35.deepcsv, pfJetsv35.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv36, pfJetsv36, pfJetsv36.deepcsv, pfJetsv36.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv37, pfJetsv37, pfJetsv37.deepcsv, pfJetsv37.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv38, pfJetsv38, pfJetsv38.deepcsv, pfJetsv38.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv39, pfJetsv39, pfJetsv39.deepcsv, pfJetsv39.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv40, pfJetsv40, pfJetsv40.deepcsv, pfJetsv40.rankDeepCSV)
+
+        FillBtagAlt(deepcsvbtagTouples_pfv41, pfJetsv41, pfJetsv41.deepcsv, pfJetsv41.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv42, pfJetsv42, pfJetsv42.deepcsv, pfJetsv42.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv43, pfJetsv43, pfJetsv43.deepcsv, pfJetsv43.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv44, pfJetsv44, pfJetsv44.deepcsv, pfJetsv44.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv45, pfJetsv45, pfJetsv45.deepcsv, pfJetsv45.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv46, pfJetsv46, pfJetsv46.deepcsv, pfJetsv46.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv47, pfJetsv47, pfJetsv47.deepcsv, pfJetsv47.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv48, pfJetsv48, pfJetsv48.deepcsv, pfJetsv48.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv49, pfJetsv49, pfJetsv49.deepcsv, pfJetsv49.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv50, pfJetsv50, pfJetsv50.deepcsv, pfJetsv50.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv51, pfJetsv51, pfJetsv51.deepcsv, pfJetsv51.rankDeepCSV)
+
 
         #FillBtag(pfdeepbtag_bb_source, pfJets, pfJets.deepcsv_bb)
         #FillBtag(pfdeepbtag_udsg_source, pfJets, pfJets.deepcsv_udsg)
