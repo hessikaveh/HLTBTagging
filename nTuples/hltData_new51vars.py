@@ -16669,14 +16669,183 @@ process.HLTBtagDeepCSVSequencePFvar51 = cms.Sequence( process.hltVerticesPF + pr
 process.NoFilter_PFBTagDeepCSV_v1_var51 = cms.Path( process.HLTBeginSequence + process.hltPreNoFilterPFBTagDeepCSVP1 + process.HLTAK4PFJetsSequence + process.HLTBtagDeepCSVSequencePFvar51 + process.HLTEndSequence )
 
 ##############################################
+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar52 = cms.EDProducer( "DeepNNTagInfoProducer",
+    computer = cms.PSet( 
+      trackFlip = cms.bool( False ),
+      useTrackWeights = cms.bool( True ),
+      trackPairV0Filter = cms.PSet(  k0sMassWindow = cms.double( 0.45 ) ),
+      SoftLeptonFlip = cms.bool( False ),
+      pseudoMultiplicityMin = cms.uint32( 3 ),
+      correctVertexMass = cms.bool( True ),
+      minimumTrackWeight = cms.double( 0.75 ),
+      charmCut = cms.double( 2.25 ),
+      trackPseudoSelection = cms.PSet( 
+        max_pT_dRcut = cms.double( 0.15 ),
+        b_dR = cms.double( 0.9394 ),
+        min_pT = cms.double( 180.0 ),
+        b_pT = cms.double( 0.5526 ),
+        ptMin = cms.double( 0.5),
+        max_pT_trackPTcut = cms.double( 4.5 ),
+        max_pT = cms.double( 750.0 ),
+        useVariableJTA = cms.bool( False ),
+        maxDecayLen = cms.double( 7.5 ),
+        qualityClass = cms.string( "any" ),
+        normChi2Max = cms.double( 99999.9 ),
+        sip2dValMin = cms.double( -99999.9 ),
+        sip3dValMin = cms.double( -99999.9 ),
+        a_dR = cms.double( -0.00157949 ),
+        maxDistToAxis = cms.double( 0.105 ),
+        totalHitsMin = cms.uint32( 5 ),
+        a_pT = cms.double( 0.0078945 ),
+        sip2dSigMax = cms.double( 99999.9 ),
+        sip2dValMax = cms.double( 99999.9 ),
+        sip3dSigMax = cms.double( 99999.9 ),
+        sip3dValMax = cms.double( 99999.9 ),
+        min_pT_dRcut = cms.double( 0.75 ),
+        jetDeltaRMax = cms.double( 0.45 ),
+        pixelHitsMin = cms.uint32( 1 ),
+        sip3dSigMin = cms.double( -99999.9 ),
+        sip2dSigMin = cms.double( 3.0 )
+      ),
+      trackSelection = cms.PSet( 
+        max_pT_dRcut = cms.double( 0.15 ),
+        b_dR = cms.double( 0.9394 ),
+        min_pT = cms.double( 180.0 ),
+        b_pT = cms.double( 0.5526 ),
+        ptMin = cms.double( 0.5 ),
+        max_pT_trackPTcut = cms.double( 4.5 ),
+        max_pT = cms.double( 500.0 ),
+        useVariableJTA = cms.bool( False ),
+        maxDecayLen = cms.double( 7.5 ),
+        qualityClass = cms.string( "any" ),
+        normChi2Max = cms.double( 99999.9 ),
+        sip2dValMin = cms.double( -99999.9 ),
+        sip3dValMin = cms.double( -99999.9 ),
+        a_dR = cms.double( -0.00157949),
+        maxDistToAxis = cms.double( 0.105 ),
+        totalHitsMin = cms.uint32( 5 ),
+        a_pT = cms.double( 0.0078945 ),
+        sip2dSigMax = cms.double( 99999.9 ),
+        sip2dValMax = cms.double( 99999.9 ),
+        sip3dSigMax = cms.double( 99999.9 ),
+        sip3dValMax = cms.double( 99999.9 ),
+        min_pT_dRcut = cms.double( 0.75 ),
+        jetDeltaRMax = cms.double( 0.45 ),
+        pixelHitsMin = cms.uint32( 3 ),
+        sip3dSigMin = cms.double( -99999.9 ),
+        sip2dSigMin = cms.double( -99999.9 )
+      ),
+      pseudoVertexV0Filter = cms.PSet(  k0sMassWindow = cms.double( 0.75 ) ),
+      trackSort = cms.string( "sip2dSig" ),
+      trackMultiplicityMin = cms.uint32(3  ),
+      vertexFlip = cms.bool( False )
+    ),
+    svTagInfos = cms.InputTag( "hltDeepSecondaryVertexTagInfosPF" )
+)
+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar52 = cms.EDProducer( "DeepFlavourJetTagsProducer",
+    src = cms.InputTag( "hltDeepCombinedSecondaryVertexBJetTagsInfosvar52" ),
+    checkSVForDefaults = cms.bool( True ),
+    toAdd = cms.PSet(  probbb = cms.string( "probb" ) ),
+    NNConfig = cms.FileInPath( "RecoBTag/Combined/data/DeepCSV_PhaseI.json" ),
+    meanPadding = cms.bool( True )
+)
+
+#######SeQUENCEUpdate#########
+process.HLTBtagDeepCSVSequencePFvar52 = cms.Sequence( process.hltVerticesPF + process.hltVerticesPFSelector + process.hltVerticesPFFilter + process.hltPFJetForBtagSelector + process.hltPFJetForBtag + process.hltDeepBLifetimeTagInfosPF + process.hltDeepInclusiveVertexFinderPF + process.hltDeepInclusiveSecondaryVerticesPF + process.hltDeepTrackVertexArbitratorPF + process.hltDeepInclusiveMergedVerticesPF + process.hltDeepSecondaryVertexTagInfosPF + process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar52 + process.hltDeepCombinedSecondaryVertexBJetTagsPFvar52 )
+#######PATHUpdate###########
+process.NoFilter_PFBTagDeepCSV_v1_var52 = cms.Path( process.HLTBeginSequence + process.hltPreNoFilterPFBTagDeepCSVP1 + process.HLTAK4PFJetsSequence + process.HLTBtagDeepCSVSequencePFvar52 + process.HLTEndSequence )
+
+
+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar53 = cms.EDProducer( "DeepNNTagInfoProducer",
+    computer = cms.PSet( 
+      trackFlip = cms.bool( False ),
+      useTrackWeights = cms.bool( True ),
+      trackPairV0Filter = cms.PSet(  k0sMassWindow = cms.double( 0.15 ) ),
+      SoftLeptonFlip = cms.bool( False ),
+      pseudoMultiplicityMin = cms.uint32( 1 ),
+      correctVertexMass = cms.bool( True ),
+      minimumTrackWeight = cms.double( 0.25 ),
+      charmCut = cms.double( 0.75 ),
+      trackPseudoSelection = cms.PSet( 
+        max_pT_dRcut = cms.double( 0.05 ),
+        b_dR = cms.double( 0.3132 ),
+        min_pT = cms.double( 60.0 ),
+        b_pT = cms.double( 0.1842 ),
+        ptMin = cms.double( 0.0),
+        max_pT_trackPTcut = cms.double( 1.5 ),
+        max_pT = cms.double( 250.0 ),
+        useVariableJTA = cms.bool( False ),
+        maxDecayLen = cms.double( 2.5 ),
+        qualityClass = cms.string( "any" ),
+        normChi2Max = cms.double( 99999.9 ),
+        sip2dValMin = cms.double( -99999.9 ),
+        sip3dValMin = cms.double( -99999.9 ),
+        a_dR = cms.double( -0.0005265 ),
+        maxDistToAxis = cms.double( 0.035 ),
+        totalHitsMin = cms.uint32( 1 ),
+        a_pT = cms.double( 0.0026315 ),
+        sip2dSigMax = cms.double( 99999.9 ),
+        sip2dValMax = cms.double( 99999.9 ),
+        sip3dSigMax = cms.double( 99999.9 ),
+        sip3dValMax = cms.double( 99999.9 ),
+        min_pT_dRcut = cms.double( 0.25 ),
+        jetDeltaRMax = cms.double( 0.15 ),
+        pixelHitsMin = cms.uint32( 1 ),
+        sip3dSigMin = cms.double( -99999.9 ),
+        sip2dSigMin = cms.double( 1.0 )
+      ),
+      trackSelection = cms.PSet( 
+        max_pT_dRcut = cms.double( 0.05 ),
+        b_dR = cms.double( 0.3132 ),
+        min_pT = cms.double( 60.0 ),
+        b_pT = cms.double( 0.1842 ),
+        ptMin = cms.double( 0.0 ),
+        max_pT_trackPTcut = cms.double( 1.5 ),
+        max_pT = cms.double( 250.0 ),
+        useVariableJTA = cms.bool( False ),
+        maxDecayLen = cms.double( 2.5 ),
+        qualityClass = cms.string( "any" ),
+        normChi2Max = cms.double( 99999.9 ),
+        sip2dValMin = cms.double( -99999.9 ),
+        sip3dValMin = cms.double( -99999.9 ),
+        a_dR = cms.double( -0.0005265),
+        maxDistToAxis = cms.double( 0.035 ),
+        totalHitsMin = cms.uint32( 1 ),
+        a_pT = cms.double( 0.0026315 ),
+        sip2dSigMax = cms.double( 99999.9 ),
+        sip2dValMax = cms.double( 99999.9 ),
+        sip3dSigMax = cms.double( 99999.9 ),
+        sip3dValMax = cms.double( 99999.9 ),
+        min_pT_dRcut = cms.double( 0.25 ),
+        jetDeltaRMax = cms.double( 0.15 ),
+        pixelHitsMin = cms.uint32( 1 ),
+        sip3dSigMin = cms.double( -99999.9 ),
+        sip2dSigMin = cms.double( -99999.9 )
+      ),
+      pseudoVertexV0Filter = cms.PSet(  k0sMassWindow = cms.double( 0.25 ) ),
+      trackSort = cms.string( "sip2dSig" ),
+      trackMultiplicityMin = cms.uint32(1  ),
+      vertexFlip = cms.bool( False )
+    ),
+    svTagInfos = cms.InputTag( "hltDeepSecondaryVertexTagInfosPF" )
+)
+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar53 = cms.EDProducer( "DeepFlavourJetTagsProducer",
+    src = cms.InputTag( "hltDeepCombinedSecondaryVertexBJetTagsInfosvar53" ),
+    checkSVForDefaults = cms.bool( True ),
+    toAdd = cms.PSet(  probbb = cms.string( "probb" ) ),
+    NNConfig = cms.FileInPath( "RecoBTag/Combined/data/DeepCSV_PhaseI.json" ),
+    meanPadding = cms.bool( True )
+)
+
+#######SeQUENCEUpdate#########
+process.HLTBtagDeepCSVSequencePFvar53 = cms.Sequence( process.hltVerticesPF + process.hltVerticesPFSelector + process.hltVerticesPFFilter + process.hltPFJetForBtagSelector + process.hltPFJetForBtag + process.hltDeepBLifetimeTagInfosPF + process.hltDeepInclusiveVertexFinderPF + process.hltDeepInclusiveSecondaryVerticesPF + process.hltDeepTrackVertexArbitratorPF + process.hltDeepInclusiveMergedVerticesPF + process.hltDeepSecondaryVertexTagInfosPF + process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar53 + process.hltDeepCombinedSecondaryVertexBJetTagsPFvar53 )
+#######PATHUpdate#############
+process.NoFilter_PFBTagDeepCSV_v1_var53 = cms.Path( process.HLTBeginSequence + process.hltPreNoFilterPFBTagDeepCSVP1 + process.HLTAK4PFJetsSequence + process.HLTBtagDeepCSVSequencePFvar53 + process.HLTEndSequence )
 
 
 
 
-
-
-
-process.HLTSchedule = cms.Schedule( *(process.HLTriggerFirstPath, process.HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v4, process.HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v4, process.HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v12, process.HLT_Mu37_Ele27_CaloIdL_MW_v2, process.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v17, process.HLT_Mu27_Ele37_CaloIdL_MW_v2, process.HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v12, process.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v17, process.HLT_Mu23_Mu12_SameSign_DZ_v2, process.HLT_Mu23_Mu12_SameSign_v2, process.HLT_Ele27_Ele37_CaloIdL_MW_v2, process.HLT_Mu23_Mu12_DZ_v2, process.NoFilter_PFBTagDeepCSV_v1, process.NoFilter_CaloBTagDeepCSV_v1,  process.NoFilter_PFBTagCSV_v1, process.NoFilter_CaloBTagCSV_v1, process.NoFilter_PFBTagDeepCSV_v1_var1, process.NoFilter_PFBTagDeepCSV_v1_var2, process.NoFilter_PFBTagDeepCSV_v1_var3,process.NoFilter_PFBTagDeepCSV_v1_var4,process.NoFilter_PFBTagDeepCSV_v1_var5,process.NoFilter_PFBTagDeepCSV_v1_var6,process.NoFilter_PFBTagDeepCSV_v1_var7,process.NoFilter_PFBTagDeepCSV_v1_var8,process.NoFilter_PFBTagDeepCSV_v1_var9, process.NoFilter_PFBTagDeepCSV_v1_var10,process.NoFilter_PFBTagDeepCSV_v1_var11, process.NoFilter_PFBTagDeepCSV_v1_var12, process.NoFilter_PFBTagDeepCSV_v1_var13, process.NoFilter_PFBTagDeepCSV_v1_var14,process.NoFilter_PFBTagDeepCSV_v1_var15,process.NoFilter_PFBTagDeepCSV_v1_var16,process.NoFilter_PFBTagDeepCSV_v1_var17,process.NoFilter_PFBTagDeepCSV_v1_var18,process.NoFilter_PFBTagDeepCSV_v1_var19,process.NoFilter_PFBTagDeepCSV_v1_var20,process.NoFilter_PFBTagDeepCSV_v1_var21,process.NoFilter_PFBTagDeepCSV_v1_var22,process.NoFilter_PFBTagDeepCSV_v1_var23,process.NoFilter_PFBTagDeepCSV_v1_var24,process.NoFilter_PFBTagDeepCSV_v1_var25,process.NoFilter_PFBTagDeepCSV_v1_var26,process.NoFilter_PFBTagDeepCSV_v1_var27,process.NoFilter_PFBTagDeepCSV_v1_var28,process.NoFilter_PFBTagDeepCSV_v1_var29,process.NoFilter_PFBTagDeepCSV_v1_var30,process.NoFilter_PFBTagDeepCSV_v1_var31,process.NoFilter_PFBTagDeepCSV_v1_var32,process.NoFilter_PFBTagDeepCSV_v1_var33,process.NoFilter_PFBTagDeepCSV_v1_var34,process.NoFilter_PFBTagDeepCSV_v1_var35,process.NoFilter_PFBTagDeepCSV_v1_var36,process.NoFilter_PFBTagDeepCSV_v1_var37,process.NoFilter_PFBTagDeepCSV_v1_var38,process.NoFilter_PFBTagDeepCSV_v1_var39,process.NoFilter_PFBTagDeepCSV_v1_var40,process.NoFilter_PFBTagDeepCSV_v1_var41,process.NoFilter_PFBTagDeepCSV_v1_var42,process.NoFilter_PFBTagDeepCSV_v1_var43,process.NoFilter_PFBTagDeepCSV_v1_var44,process.NoFilter_PFBTagDeepCSV_v1_var45,process.NoFilter_PFBTagDeepCSV_v1_var46,process.NoFilter_PFBTagDeepCSV_v1_var47,process.NoFilter_PFBTagDeepCSV_v1_var48,process.NoFilter_PFBTagDeepCSV_v1_var49,process.NoFilter_PFBTagDeepCSV_v1_var50,process.NoFilter_PFBTagDeepCSV_v1_var51,process.HLTriggerFinalPath ))
+process.HLTSchedule = cms.Schedule( *(process.HLTriggerFirstPath, process.HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v4, process.HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v4, process.HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v12, process.HLT_Mu37_Ele27_CaloIdL_MW_v2, process.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v17, process.HLT_Mu27_Ele37_CaloIdL_MW_v2, process.HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v12, process.HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v17, process.HLT_Mu23_Mu12_SameSign_DZ_v2, process.HLT_Mu23_Mu12_SameSign_v2, process.HLT_Ele27_Ele37_CaloIdL_MW_v2, process.HLT_Mu23_Mu12_DZ_v2, process.NoFilter_PFBTagDeepCSV_v1, process.NoFilter_CaloBTagDeepCSV_v1,  process.NoFilter_PFBTagCSV_v1, process.NoFilter_CaloBTagCSV_v1, process.NoFilter_PFBTagDeepCSV_v1_var1, process.NoFilter_PFBTagDeepCSV_v1_var2, process.NoFilter_PFBTagDeepCSV_v1_var3,process.NoFilter_PFBTagDeepCSV_v1_var4,process.NoFilter_PFBTagDeepCSV_v1_var5,process.NoFilter_PFBTagDeepCSV_v1_var6,process.NoFilter_PFBTagDeepCSV_v1_var7,process.NoFilter_PFBTagDeepCSV_v1_var8,process.NoFilter_PFBTagDeepCSV_v1_var9, process.NoFilter_PFBTagDeepCSV_v1_var10,process.NoFilter_PFBTagDeepCSV_v1_var11, process.NoFilter_PFBTagDeepCSV_v1_var12, process.NoFilter_PFBTagDeepCSV_v1_var13, process.NoFilter_PFBTagDeepCSV_v1_var14,process.NoFilter_PFBTagDeepCSV_v1_var15,process.NoFilter_PFBTagDeepCSV_v1_var16,process.NoFilter_PFBTagDeepCSV_v1_var17,process.NoFilter_PFBTagDeepCSV_v1_var18,process.NoFilter_PFBTagDeepCSV_v1_var19,process.NoFilter_PFBTagDeepCSV_v1_var20,process.NoFilter_PFBTagDeepCSV_v1_var21,process.NoFilter_PFBTagDeepCSV_v1_var22,process.NoFilter_PFBTagDeepCSV_v1_var23,process.NoFilter_PFBTagDeepCSV_v1_var24,process.NoFilter_PFBTagDeepCSV_v1_var25,process.NoFilter_PFBTagDeepCSV_v1_var26,process.NoFilter_PFBTagDeepCSV_v1_var27,process.NoFilter_PFBTagDeepCSV_v1_var28,process.NoFilter_PFBTagDeepCSV_v1_var29,process.NoFilter_PFBTagDeepCSV_v1_var30,process.NoFilter_PFBTagDeepCSV_v1_var31,process.NoFilter_PFBTagDeepCSV_v1_var32,process.NoFilter_PFBTagDeepCSV_v1_var33,process.NoFilter_PFBTagDeepCSV_v1_var34,process.NoFilter_PFBTagDeepCSV_v1_var35,process.NoFilter_PFBTagDeepCSV_v1_var36,process.NoFilter_PFBTagDeepCSV_v1_var37,process.NoFilter_PFBTagDeepCSV_v1_var38,process.NoFilter_PFBTagDeepCSV_v1_var39,process.NoFilter_PFBTagDeepCSV_v1_var40,process.NoFilter_PFBTagDeepCSV_v1_var41,process.NoFilter_PFBTagDeepCSV_v1_var42,process.NoFilter_PFBTagDeepCSV_v1_var43,process.NoFilter_PFBTagDeepCSV_v1_var44,process.NoFilter_PFBTagDeepCSV_v1_var45,process.NoFilter_PFBTagDeepCSV_v1_var46,process.NoFilter_PFBTagDeepCSV_v1_var47,process.NoFilter_PFBTagDeepCSV_v1_var48,process.NoFilter_PFBTagDeepCSV_v1_var49,process.NoFilter_PFBTagDeepCSV_v1_var50,process.NoFilter_PFBTagDeepCSV_v1_var51,process.NoFilter_PFBTagDeepCSV_v1_var52,process.NoFilter_PFBTagDeepCSV_v1_var53,process.HLTriggerFinalPath ))
 
 
 process.source = cms.Source( "PoolSource",

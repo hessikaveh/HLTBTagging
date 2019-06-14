@@ -969,6 +969,12 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
     pfdeepbtag_sourcev51, pfdeepbtag_labelv51                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar51:probb")
     pfShallowTag_sourcev51, pfShallowTag_labelv51             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar51")
 
+    pfdeepbtag_sourcev52, pfdeepbtag_labelv52                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar52:probb")
+    pfShallowTag_sourcev52, pfShallowTag_labelv52             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar52")
+
+    pfdeepbtag_sourcev53, pfdeepbtag_labelv53                 = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>>"), ("hltDeepCombinedSecondaryVertexBJetTagsPFvar53:probb")
+    pfShallowTag_sourcev53, pfShallowTag_labelv53             = Handle("std::vector<reco::ShallowTagInfo>"),("hltDeepCombinedSecondaryVertexBJetTagsInfosvar53")
+
 
 
     #pfdeepbtag_bb_source, pfdeepbtag_bb_label           = Handle("edm::AssociationVector<edm::RefToBaseProd<reco::Jet>,vector<float>,edm::RefToBase<reco::Jet>,unsigned int,edm::helper::AssociationIdenticalKeyReference>"), ("hltDeepCombinedSecondaryVertexBJetTagsPF:probbb")
@@ -1232,6 +1238,10 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
 
     pfJetsv51              = BookVector(tree,"pfJetsv51",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
 
+    pfJetsv52              = BookVector(tree,"pfJetsv52",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
+    pfJetsv53              = BookVector(tree,"pfJetsv53",['pt','eta','phi','mass', 'energy','matchOff','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult','csv','deepcsv','deepcsv_bb','deepcsv_udsg',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "mcFlavour"]+jetVars,trkVars)
+
 
     offJets             = BookVector(tree,"offJets",['pt','eta','phi','mass', 'energy','csv','deepcsv','deepcsv_bb','deepcsv_b','deepcsv_udsg','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "matchPF", "matchCalo", "mcFlavour", "partonFlavour", "hadronFlavour", "lepOverlap04Tight"]+jetVars,trkVars)
     #offCleanJets        = BookVector(tree,"offCleanJets",['pt','eta','phi','mass', 'energy','csv','deepcsv','deepcsv_bb','deepcsv_b','deepcsv_udsg','matchGen','neHadEF','neEmEF','chHadEF','chEmEF','muEF','mult','neMult','chMult',"passesTightID","passesTightLeptVetoID", "passesLooseID", "rankCSV", "rankDeepCSV", "matchPF", "matchCalo", "mcFlavour", "partonFlavour", "hadronFlavour", "lepOverlap04Tight", "offOrder"]+jetVars,trkVars)
@@ -1443,6 +1453,11 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         event.getByLabel(pfShallowTag_labelv50, pfShallowTag_sourcev50)
         event.getByLabel(pfdeepbtag_labelv51, pfdeepbtag_sourcev51)
         event.getByLabel(pfShallowTag_labelv51, pfShallowTag_sourcev51)
+
+        event.getByLabel(pfdeepbtag_labelv52, pfdeepbtag_sourcev52)
+        event.getByLabel(pfShallowTag_labelv52, pfShallowTag_sourcev52)
+        event.getByLabel(pfdeepbtag_labelv53, pfdeepbtag_sourcev53)
+        event.getByLabel(pfShallowTag_labelv53, pfShallowTag_sourcev53)
 
 
         #print "getting offjets by label"
@@ -1706,6 +1721,11 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         FillVector(pfJets_source,pfJetsv51)
         FillVectorShallowTag(pfShallowTag_sourcev51, pfJetsv51, jetVars, trkVars)
 
+        FillVector(pfJets_source,pfJetsv52)
+        FillVectorShallowTag(pfShallowTag_sourcev52, pfJetsv52, jetVars, trkVars)
+        FillVector(pfJets_source,pfJetsv53)
+        FillVectorShallowTag(pfShallowTag_sourcev53, pfJetsv53, jetVars, trkVars)
+
 
 
 
@@ -1787,6 +1807,9 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         deepcsvbtagTouples_pfv50 = getBJetValuesforFilling(pfdeepbtag_sourcev50)
         deepcsvbtagTouples_pfv51 = getBJetValuesforFilling(pfdeepbtag_sourcev51)
 
+        deepcsvbtagTouples_pfv52 = getBJetValuesforFilling(pfdeepbtag_sourcev52)
+        deepcsvbtagTouples_pfv53 = getBJetValuesforFilling(pfdeepbtag_sourcev53)
+
 
 
         #FillBtag(pfbtag_source, pfJets, pfJets.csv, pfJets.rankCSV,
@@ -1850,6 +1873,8 @@ def launchNtupleFromHLT(fileOutput,filesInput, secondaryFiles, maxEvents,preProc
         FillBtagAlt(deepcsvbtagTouples_pfv49, pfJetsv49, pfJetsv49.deepcsv, pfJetsv49.rankDeepCSV)
         FillBtagAlt(deepcsvbtagTouples_pfv50, pfJetsv50, pfJetsv50.deepcsv, pfJetsv50.rankDeepCSV)
         FillBtagAlt(deepcsvbtagTouples_pfv51, pfJetsv51, pfJetsv51.deepcsv, pfJetsv51.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv52, pfJetsv52, pfJetsv52.deepcsv, pfJetsv52.rankDeepCSV)
+        FillBtagAlt(deepcsvbtagTouples_pfv53, pfJetsv53, pfJetsv53.deepcsv, pfJetsv53.rankDeepCSV)
 
 
         #FillBtag(pfdeepbtag_bb_source, pfJets, pfJets.deepcsv_bb)

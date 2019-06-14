@@ -67,9 +67,9 @@ if __name__ == '__main__':
         config.General.workArea = 'crab_' + name + prefix 
         config.General.transferLogs=True
 #       config.General.requestName = name+"_"+dataset.replace('/',"_")
-        config.General.requestName = name + "_V3_"  + prefix + "_" + dataset[1][0].split('/')[1].split("-")[0] + dataset[2]
+        config.General.requestName = name + "_V4_"  + prefix + "_" + dataset[1][0].split('/')[1].split("-")[0] + dataset[2]
 
-        print "Requestname: ", name + "_V3_" + prefix + "_" + dataset[1][0].split('/')[1].split("-")[0] + dataset[2]
+        print "Requestname: ", name + "_V4_" + prefix + "_" + dataset[1][0].split('/')[1].split("-")[0] + dataset[2]
         #raw_input("press ret")
         
         config.section_("JobType")
