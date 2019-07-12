@@ -5,7 +5,7 @@ process = cms.Process("MYHLT")
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring('root://cms-xrd-global.cern.ch//store/data/Run2017C/MuonEG/RAW/v1/000/299/368/00000/00E9C4F1-E76B-E711-8952-02163E01A27B.root'),
     inputCommands = cms.untracked.vstring('keep *'),
-    lumisToProcess = cms.untracked.VLuminosityBlockRange("304777:420-304777:426")
+    lumisToProcess = cms.untracked.VLuminosityBlockRange()
 )
 process.HLTConfigVersion = cms.PSet(
     tableName = cms.string('/users/hkaveh/Tutorial/BTagHLTtest/V3')
@@ -4375,13 +4375,13 @@ process.hltDeepBLifetimeTagInfosPF = cms.EDProducer("CandIPProducer",
     jetDirectionUsingGhostTrack = cms.bool(False),
     jetDirectionUsingTracks = cms.bool(False),
     jets = cms.InputTag("hltPFJetForBtag"),
-    maxDeltaR = cms.double(0.8),
+    maxDeltaR = cms.double(0.4),
     maximumChiSquared = cms.double(5.0),
-    maximumLongitudinalImpactParameter = cms.double(0.0904872166516),
+    maximumLongitudinalImpactParameter = cms.double(17.0),
     maximumTransverseImpactParameter = cms.double(0.2),
-    minimumNumberOfHits = cms.int32(1),
+    minimumNumberOfHits = cms.int32(3),
     minimumNumberOfPixelHits = cms.int32(2),
-    minimumTransverseMomentum = cms.double(0.0),
+    minimumTransverseMomentum = cms.double(1.0),
     primaryVertex = cms.InputTag("hltVerticesPFFilter"),
     useTrackQuality = cms.bool(False)
 )
@@ -22661,38 +22661,6 @@ process.dqmOutput = cms.OutputModule("DQMRootOutputModule",
 )
 
 
-process.hltOutputFULL = cms.OutputModule("PoolOutputModule",
-    dataset = cms.untracked.PSet(
-
-    ),
-    fileName = cms.untracked.string('./cmsswPreProcessing.root'),
-    outputCommands = cms.untracked.vstring('drop *', 
-        'keep *Egamma*_*_*_*', 
-        'keep bool*ValueMap*_*Electron*_*_*', 
-        'keep l1t*_*_*_*', 
-        'keep *_*Ht*_*_*', 
-        'keep *Jet*_*_*_*', 
-        'keep *Electron*_*_*_*', 
-        'keep *Muon*_*_*_*', 
-        'keep *Track*_*_*_*', 
-        'drop *Track*_hlt*_*_*', 
-        'drop SimTracks_*_*_*', 
-        'keep *SuperCluster*_*_*_*', 
-        'keep *MET*_*_*_*', 
-        'keep *Vertex*_*_*_*', 
-        'keep *Shallow*_hltDeep*_*_*', 
-        'keep *_prunedGenParticles_*_*', 
-        'keep *genParticles_*_*_*', 
-        'keep *Trigger*_*_*_*', 
-        'keep recoJetedmRefToBaseProdTofloatsAssociationVector_*_*_*', 
-        'keep *_slimmedAddPileupInfo_*_*', 
-        'drop *_*Digis*_*_*', 
-        'drop triggerTriggerEvent_*_*_*', 
-        'keep *_hltGtStage2Digis_*_*', 
-        'keep *_generator_*_*')
-)
-
-
 process.DQMStore = cms.Service("DQMStore",
     LSbasedMode = cms.untracked.bool(False),
     collateHistograms = cms.untracked.bool(False),
@@ -25137,9 +25105,6 @@ process.HLTBtagDeepCSVSequencePFvar46 = cms.Sequence(process.hltVerticesPF+proce
 process.HLTBtagDeepCSVSequencePFvar41 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar41+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar41)
 
 
-process.HLTBtagDeepCSVSequencePFvar40 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar40+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar40)
-
-
 process.HLTBtagDeepCSVSequencePFvar43 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar43+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar43)
 
 
@@ -25215,7 +25180,7 @@ process.HLTBtagDeepCSVSequencePFvar6 = cms.Sequence(process.hltVerticesPF+proces
 process.HLTBtagDeepCSVSequencePFvar7 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar7+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar7)
 
 
-process.HLTBtagDeepCSVSequencePFvar16 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar16+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar16)
+process.HLTBtagDeepCSVSequencePFvar42 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar42+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar42)
 
 
 process.HLTIterativeTrackingForElectronsIteration1 = cms.Sequence(process.hltIter1ElectronsClustersRefRemoval+process.hltIter1ElectronsMaskedMeasurementTrackerEvent+process.hltIter1ElectronsPixelLayerTriplets+process.hltIter1ElectronsPixelTrackingRegions+process.hltIter1ElectronsPixelClusterCheck+process.hltIter1ElectronsPixelHitDoublets+process.hltIter1ElectronsPixelHitTriplets+process.hltIter1ElectronsPixelSeeds+process.hltIter1ElectronsCkfTrackCandidates+process.hltIter1ElectronsCtfWithMaterialTracks+process.hltIter1ElectronsTrackSelectionHighPurityLoose+process.hltIter1ElectronsTrackSelectionHighPurityTight+process.hltIter1ElectronsTrackSelectionHighPurity)
@@ -25281,9 +25246,6 @@ process.HLTBtagDeepCSVSequencePF = cms.Sequence(process.hltVerticesPF+process.hl
 process.HLTIterativeTrackingL3MuonIter02 = cms.Sequence(process.HLTIterativeTrackingL3MuonIteration0+process.HLTIterativeTrackingL3MuonIteration1+process.hltIter1L3MuonMerged+process.HLTIterativeTrackingL3MuonIteration2+process.hltIter2L3MuonMerged)
 
 
-process.HLTBtagDeepCSVSequencePFvar21 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar21+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar21)
-
-
 process.HLTDoLocalPixelSequenceRegForBTag = cms.Sequence(process.hltSelectorJets20L1FastJet+process.hltSelectorCentralJets20L1FastJeta+process.hltSiPixelDigisRegForBTag+process.hltSiPixelClustersRegForBTag+process.hltSiPixelClustersRegForBTagCache+process.hltSiPixelRecHitsRegForBTag+process.hltPixelLayerQuadrupletsRegForBTag)
 
 
@@ -25305,9 +25267,6 @@ process.HLTIterL3OImuonTkCandidateSequence = cms.Sequence(process.hltIterL3OISee
 process.HLTRecopixelvertexingSequence = cms.Sequence(process.HLTRecoPixelTracksSequence+process.hltPixelVertices+process.hltTrimmedPixelVertices)
 
 
-process.HLTL2muonrecoNocandSequence = cms.Sequence(process.HLTMuonLocalRecoSequence+process.hltL2OfflineMuonSeeds+process.hltL2MuonSeeds+process.hltL2Muons)
-
-
 process.HLTBtagDeepCSVSequencePFvar12 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar12+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar12)
 
 
@@ -25318,6 +25277,9 @@ process.HLTBtagDeepCSVSequencePFvar10 = cms.Sequence(process.hltVerticesPF+proce
 
 
 process.HLTBtagDeepCSVSequencePFvar11 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar11+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar11)
+
+
+process.HLTBtagDeepCSVSequencePFvar16 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar16+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar16)
 
 
 process.HLTBtagDeepCSVSequencePFvar17 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar17+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar17)
@@ -25359,6 +25321,9 @@ process.HLTBtagDeepCSVSequencePFvar23 = cms.Sequence(process.hltVerticesPF+proce
 process.HLTBtagDeepCSVSequencePFvar22 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar22+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar22)
 
 
+process.HLTBtagDeepCSVSequencePFvar21 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar21+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar21)
+
+
 process.HLTBtagDeepCSVSequencePFvar20 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar20+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar20)
 
 
@@ -25366,9 +25331,6 @@ process.HLTIterL3MuonRecoPixelTracksSequence = cms.Sequence(process.hltIterL3Muo
 
 
 process.HLTRecoPixelVertexingForElectronSequence = cms.Sequence(process.hltPixelLayerTriplets+process.hltPixelTracksElectronsFilter+process.hltPixelTracksElectronsFitter+process.hltPixelTracksTrackingRegionsElectrons+process.hltPixelTracksHitDoubletsElectrons+process.hltPixelTracksHitTripletsElectrons+process.hltPixelTracksElectrons+process.hltPixelVerticesElectrons)
-
-
-process.HLTL2muonrecoSequence = cms.Sequence(process.HLTL2muonrecoNocandSequence+process.hltL2MuonCandidates)
 
 
 process.HLTIterativeTrackingIteration0ForBTag = cms.Sequence(process.hltIter0PFLowPixelSeedsFromPixelTracksForBTag+process.hltIter0PFlowCkfTrackCandidatesForBTag+process.hltIter0PFlowCtfWithMaterialTracksForBTag+process.hltIter0PFlowTrackCutClassifierForBTag+process.hltIter0PFlowTrackSelectionHighPurityForBTag)
@@ -25381,6 +25343,9 @@ process.HLTIterativeTrackingIteration0ForIterL3FromL1Muon = cms.Sequence(process
 
 
 process.HLTIterativeTrackingForElectronIter02 = cms.Sequence(process.HLTIterativeTrackingForElectronsIteration0+process.HLTIterativeTrackingForElectronsIteration1+process.hltIter1MergedForElectrons+process.HLTIterativeTrackingForElectronsIteration2+process.hltIter2MergedForElectrons)
+
+
+process.HLTBtagDeepCSVSequencePFvar40 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar40+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar40)
 
 
 process.HLTBtagDeepCSVSequencePFvar38 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar38+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar38)
@@ -25419,9 +25384,6 @@ process.HLTBtagDeepCSVSequencePFvar36 = cms.Sequence(process.hltVerticesPF+proce
 process.HLTBtagDeepCSVSequencePFvar37 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar37+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar37)
 
 
-process.HLTDoLocalStripSequenceRegForBTag = cms.Sequence(process.hltSiStripExcludedFEDListProducer+process.hltSiStripRawToClustersFacility+process.hltSiStripClustersRegForBTag)
-
-
 process.HLTIterativeTrackingIteration2ForBTag = cms.Sequence(process.hltIter2ClustersRefRemovalForBTag+process.hltIter2MaskedMeasurementTrackerEventForBTag+process.hltIter2PixelLayerTripletsForBTag+process.hltIter2PFlowPixelTrackingRegionsForBTag+process.hltIter2PFlowPixelClusterCheckForBTag+process.hltIter2PFlowPixelHitDoubletsForBTag+process.hltIter2PFlowPixelHitTripletsForBTag+process.hltIter2PFlowPixelSeedsForBTag+process.hltIter2PFlowCkfTrackCandidatesForBTag+process.hltIter2PFlowCtfWithMaterialTracksForBTag+process.hltIter2PFlowTrackCutClassifierForBTag+process.hltIter2PFlowTrackSelectionHighPurityForBTag)
 
 
@@ -25443,7 +25405,7 @@ process.HLTIterativeTrackingIter02 = cms.Sequence(process.HLTIterativeTrackingIt
 process.HLTDoFullUnpackingEgammaEcalSequence = cms.Sequence(process.hltEcalDigis+process.hltEcalPreshowerDigis+process.hltEcalUncalibRecHit+process.hltEcalDetIdToBeRecovered+process.hltEcalRecHit+process.hltEcalPreshowerRecHit)
 
 
-process.HLTBtagDeepCSVSequencePFvar42 = cms.Sequence(process.hltVerticesPF+process.hltVerticesPFSelector+process.hltVerticesPFFilter+process.hltPFJetForBtagSelector+process.hltPFJetForBtag+process.hltDeepBLifetimeTagInfosPF+process.hltDeepInclusiveVertexFinderPF+process.hltDeepInclusiveSecondaryVerticesPF+process.hltDeepTrackVertexArbitratorPF+process.hltDeepInclusiveMergedVerticesPF+process.hltDeepSecondaryVertexTagInfosPF+process.hltDeepCombinedSecondaryVertexBJetTagsInfosvar42+process.hltDeepCombinedSecondaryVertexBJetTagsPFvar42)
+process.HLTDoLocalStripSequenceRegForBTag = cms.Sequence(process.hltSiStripExcludedFEDListProducer+process.hltSiStripRawToClustersFacility+process.hltSiStripClustersRegForBTag)
 
 
 process.HLTTrackReconstructionForPF = cms.Sequence(process.HLTDoLocalPixelSequence+process.HLTRecopixelvertexingSequence+process.HLTDoLocalStripSequence+process.HLTIterativeTrackingIter02+process.hltPFMuonMerging+process.hltMuonLinks+process.hltMuons)
@@ -25473,7 +25435,7 @@ process.HLTAK4PFJetsCorrectionSequence = cms.Sequence(process.hltFixedGridRhoFas
 process.HLTEle37CaloIdLUnseededSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgammaUnseeded+process.hltEgammaCandidatesUnseeded+process.hltEgammaCandidatesWrapperUnseeded+process.hltEG37EtUnseededFilter+process.HLTDoLocalHcalWithTowerL1EGUnseededSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverEUnseeded+process.hltEG37HEUnseededFilter+process.hltEgammaClusterShapeUnseeded+process.hltEG37CaloIdLClusterShapeUnseededFilter+process.HLTElePixelMatchUnseededSequence+process.hltEle37CaloIdLPixelMatchUnseededFilter)
 
 
-process.HLTAK4CaloJetsPrePFRecoSequence = cms.Sequence(process.HLTDoCaloSequencePF+process.hltAK4CaloJetsPF)
+process.HLTL2muonrecoNocandSequence = cms.Sequence(process.HLTMuonLocalRecoSequence+process.hltL2OfflineMuonSeeds+process.hltL2MuonSeeds+process.hltL2Muons)
 
 
 process.HLTL3muontrkisorecoSequence = cms.Sequence(process.HLTPixelTrackingL3Muon+process.HLTDoLocalStripSequence+process.HLTIterativeTrackingL3MuonIter02)
@@ -25497,13 +25459,13 @@ process.HLTAK4CaloJetsReconstructionSequence = cms.Sequence(process.HLTDoCaloSeq
 process.HLTAK4CaloJetsSequence = cms.Sequence(process.HLTAK4CaloJetsReconstructionSequence+process.HLTAK4CaloJetsCorrectionSequence)
 
 
-process.HLTIterL3OIAndIOFromL2muonTkCandidateSequence = cms.Sequence(process.HLTIterL3OImuonTkCandidateSequence+process.hltIterL3OIL3MuonsLinksCombination+process.hltIterL3OIL3Muons+process.hltIterL3OIL3MuonCandidates+process.hltL2SelectorForL3IO+process.HLTIterL3IOmuonTkCandidateSequence+process.hltIterL3MuonsFromL2LinksCombination+process.hltIterL3MuonsFromL2)
-
-
 process.HLTIterativeTrackingIter02ForIterL3FromL1Muon = cms.Sequence(process.HLTIterativeTrackingIteration0ForIterL3FromL1Muon+process.HLTIterativeTrackingIteration2ForIterL3FromL1Muon+process.hltIter2IterL3FromL1MuonMerged)
 
 
 process.HLTEle37CaloIdLMWUnseededSequence = cms.Sequence(process.HLTEle37CaloIdLUnseededSequence+process.hltEle37CaloIdLMWPMS2UnseededFilter)
+
+
+process.HLTAK4CaloJetsPrePFRecoSequence = cms.Sequence(process.HLTDoCaloSequencePF+process.hltAK4CaloJetsPF)
 
 
 process.HLTElePixelMatchSequence = cms.Sequence(process.HLTDoLocalPixelSequence+process.HLTDoLocalStripSequence+process.hltPixelLayerPairs+process.hltPixelLayerTriplets+process.hltEgammaHoverE+process.hltEgammaSuperClustersToPixelMatch+process.hltEleSeedsTrackingRegions+process.hltElePixelHitDoublets+process.hltElePixelHitDoubletsForTriplets+process.hltElePixelHitTriplets+process.hltElePixelSeedsDoublets+process.hltElePixelSeedsTriplets+process.hltElePixelSeedsCombined+process.hltEgammaElectronPixelSeeds+process.hltEgammaPixelMatchVars)
@@ -25515,13 +25477,19 @@ process.HLTIterativeTrackingIter02ForBTag = cms.Sequence(process.HLTIterativeTra
 process.HLTMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegL1MatchFilter+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegEtFilter+process.hltEgammaClusterShape+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegClusterShapeFilter+process.HLTDoLocalHcalWithTowerL1EGSeededSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegHEFilter+process.hltEgammaEcalPFClusterIso+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegEcalIsoFilter+process.HLTPFHcalClusteringForEgamma+process.hltEgammaHcalPFClusterIso+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegHcalIsoFilter+process.HLTElePixelMatchSequence+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegPixelMatchFilter+process.HLTGsfElectronSequence+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegOneOEMinusOneOPFilter+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegDetaFilter+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegDphiFilter+process.HLTTrackReconstructionForIsoElectronIter02+process.hltEgammaEleGsfTrackIso+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegTrackIsoFilter)
 
 
-process.HLTIterL3IOmuonFromL1TkCandidateSequence = cms.Sequence(process.HLTRecopixelvertexingSequenceForIterL3FromL1Muon+process.HLTIterativeTrackingIter02ForIterL3FromL1Muon)
+process.HLTEle37CaloIdLSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleAndDoubleEGNonIsoOrWithEG26WithJetAndTauFilter+process.hltEG37EtFilter+process.HLTDoLocalHcalWithTowerL1EGSeededSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG37HEFilter+process.hltEgammaClusterShape+process.hltEG37CaloIdLClusterShapeFilter+process.HLTElePixelMatchSequence+process.hltEle37CaloIdLPixelMatchFilter)
+
+
+process.HLTEle37CaloIdLMWSequence = cms.Sequence(process.HLTEle37CaloIdLSequence+process.hltEle37CaloIdLMWPMS2Filter)
 
 
 process.HLTPreAK4PFJetsRecoSequence = cms.Sequence(process.HLTAK4CaloJetsPrePFRecoSequence+process.hltAK4CaloJetsPFEt5)
 
 
 process.HLTL3muontrkisovvlSequence = cms.Sequence(process.HLTL3muontrkisorecoSequence+process.hltL3MuonRelTrkIsolationVVL)
+
+
+process.HLTL2muonrecoSequence = cms.Sequence(process.HLTL2muonrecoNocandSequence+process.hltL2MuonCandidates)
 
 
 process.HLTEle23Ele12CaloIdLTrackIdLIsoVLSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleAndDoubleEGOrPairFilter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLEtLeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLEtLeg2Filter+process.hltEgammaClusterShape+process.hltEle23Ele12CaloIdLTrackIdLIsoVLClusterShapeLeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLClusterShapeLeg2Filter+process.HLTDoLocalHcalWithTowerL1EGSeededSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEle23Ele12CaloIdLTrackIdLIsoVLHELeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLHELeg2Filter+process.hltEgammaEcalPFClusterIso+process.hltEle23Ele12CaloIdLTrackIdLIsoVLEcalIsoLeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLEcalIsoLeg2Filter+process.HLTPFHcalClusteringForEgamma+process.hltEgammaHcalPFClusterIso+process.hltEle23Ele12CaloIdLTrackIdLIsoVLHcalIsoLeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLHcalIsoLeg2Filter+process.HLTElePixelMatchSequence+process.hltEle23Ele12CaloIdLTrackIdLIsoVLPixelMatchLeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLPixelMatchLeg2Filter+process.HLTGsfElectronSequence+process.hltEle23Ele12CaloIdLTrackIdLIsoVLOneOEMinusOneOPLeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLOneOEMinusOneOPLeg2Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLDetaLeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLDetaLeg2Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLDphiLeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLDphiLeg2Filter+process.HLTTrackReconstructionForIsoElectronIter02+process.hltEgammaEleGsfTrackIso+process.hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter+process.hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter)
@@ -25533,19 +25501,22 @@ process.HLTMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLElectronlegSequence = cms.Seque
 process.HLTTrackReconstructionForBTag = cms.Sequence(process.HLTDoLocalPixelSequenceRegForBTag+process.HLTFastRecopixelvertexingSequence+process.HLTDoLocalStripSequenceRegForBTag+process.HLTIterativeTrackingIter02ForBTag)
 
 
-process.HLTIterL3muonTkCandidateSequence = cms.Sequence(process.HLTDoLocalPixelSequence+process.HLTDoLocalStripSequence+process.HLTIterL3OIAndIOFromL2muonTkCandidateSequence+process.hltIterL3MuonL1MuonNoL2Selector+process.HLTIterL3IOmuonFromL1TkCandidateSequence)
-
-
-process.HLTEle37CaloIdLSequence = cms.Sequence(process.HLTDoFullUnpackingEgammaEcalSequence+process.HLTPFClusteringForEgamma+process.hltEgammaCandidates+process.hltEGL1SingleAndDoubleEGNonIsoOrWithEG26WithJetAndTauFilter+process.hltEG37EtFilter+process.HLTDoLocalHcalWithTowerL1EGSeededSequence+process.HLTFastJetForEgamma+process.hltEgammaHoverE+process.hltEG37HEFilter+process.hltEgammaClusterShape+process.hltEG37CaloIdLClusterShapeFilter+process.HLTElePixelMatchSequence+process.hltEle37CaloIdLPixelMatchFilter)
+process.HLTIterL3IOmuonFromL1TkCandidateSequence = cms.Sequence(process.HLTRecopixelvertexingSequenceForIterL3FromL1Muon+process.HLTIterativeTrackingIter02ForIterL3FromL1Muon)
 
 
 process.HLTDoubleEle37Ele27CaloIdLMWSequence = cms.Sequence(process.HLTDoubleEle37Ele27CaloIdLUnseededSequence+process.hltDiEle27CaloIdLMWPMS2UnseededFilter+process.hltEle37CaloIdLMWPMS2UnseededFilter)
 
 
-process.HLTEle37CaloIdLMWSequence = cms.Sequence(process.HLTEle37CaloIdLSequence+process.hltEle37CaloIdLMWPMS2Filter)
+process.HLTIterL3OIAndIOFromL2muonTkCandidateSequence = cms.Sequence(process.HLTIterL3OImuonTkCandidateSequence+process.hltIterL3OIL3MuonsLinksCombination+process.hltIterL3OIL3Muons+process.hltIterL3OIL3MuonCandidates+process.hltL2SelectorForL3IO+process.HLTIterL3IOmuonTkCandidateSequence+process.hltIterL3MuonsFromL2LinksCombination+process.hltIterL3MuonsFromL2)
 
 
 process.HLTBtagDeepCSVSequenceL3 = cms.Sequence(process.hltSelectorJets30L1FastJet+process.hltSelectorCentralJets30L1FastJeta+process.hltSelector8CentralJetsL1FastJet+process.HLTTrackReconstructionForBTag+process.hltVerticesL3+process.hltFastPixelBLifetimeL3Associator+process.hltImpactParameterTagInfos+process.hltInclusiveVertexFinder+process.hltInclusiveSecondaryVertices+process.hltTrackVertexArbitrator+process.hltInclusiveMergedVertices+process.hltInclusiveSecondaryVertexFinderTagInfos+process.hltDeepCombinedSecondaryVertexBJetTagsInfosCalo+process.hltDeepCombinedSecondaryVertexBJetTagsCalo)
+
+
+process.HLTBtagCSVSequenceL3 = cms.Sequence(process.hltSelectorJets30L1FastJet+process.hltSelectorCentralJets30L1FastJeta+process.hltSelector8CentralJetsL1FastJet+process.HLTTrackReconstructionForBTag+process.hltVerticesL3+process.hltFastPixelBLifetimeL3Associator+process.hltImpactParameterTagInfos+process.hltInclusiveVertexFinder+process.hltInclusiveSecondaryVertices+process.hltTrackVertexArbitrator+process.hltInclusiveMergedVertices+process.hltInclusiveSecondaryVertexFinderTagInfos+process.hltCombinedSecondaryVertexBJetTagsCalo)
+
+
+process.HLTIterL3muonTkCandidateSequence = cms.Sequence(process.HLTDoLocalPixelSequence+process.HLTDoLocalStripSequence+process.HLTIterL3OIAndIOFromL2muonTkCandidateSequence+process.hltIterL3MuonL1MuonNoL2Selector+process.HLTIterL3IOmuonFromL1TkCandidateSequence)
 
 
 process.HLTL3muonrecoNocandSequence = cms.Sequence(process.HLTIterL3muonTkCandidateSequence+process.hltIterL3MuonMerged+process.hltIterL3MuonAndMuonFromL1Merged+process.hltL3MuonsIterL3Links+process.hltIterL3Muons)
@@ -25555,9 +25526,6 @@ process.HLTL3muonrecoSequence = cms.Sequence(process.HLTL3muonrecoNocandSequence
 
 
 process.HLTMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLMuonlegSequence = cms.Sequence(process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLMuonlegL1Filtered0+process.HLTL2muonrecoSequence+cms.ignore(process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLMuonlegL2Filtered5)+process.HLTL3muonrecoSequence+cms.ignore(process.hltL1fForIterL3Mu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLMuonlegL1Filtered0)+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLMuonlegL3Filtered12+process.HLTL3muontrkisovvlSequence+process.hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLMuonlegL3IsoFiltered12)
-
-
-process.HLTBtagCSVSequenceL3 = cms.Sequence(process.hltSelectorJets30L1FastJet+process.hltSelectorCentralJets30L1FastJeta+process.hltSelector8CentralJetsL1FastJet+process.HLTTrackReconstructionForBTag+process.hltVerticesL3+process.hltFastPixelBLifetimeL3Associator+process.hltImpactParameterTagInfos+process.hltInclusiveVertexFinder+process.hltInclusiveSecondaryVertices+process.hltTrackVertexArbitrator+process.hltInclusiveMergedVertices+process.hltInclusiveSecondaryVertexFinderTagInfos+process.hltCombinedSecondaryVertexBJetTagsCalo)
 
 
 process.HLTMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLMuonlegSequence = cms.Sequence(process.hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLMuonlegL1Filtered0+process.HLTL2muonrecoSequence+cms.ignore(process.hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLMuonlegL2Filtered10)+process.HLTL3muonrecoSequence+cms.ignore(process.hltL1fForIterL3Mu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLMuonlegL1Filtered0)+process.hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLMuonlegL3Filtered23+process.HLTL3muontrkisovvlSequence+process.hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLMuonlegL3IsoFiltered23)
@@ -25782,6 +25750,44 @@ process.NoFilter_PFBTagDeepCSV_v1_var52 = cms.Path(process.HLTBeginSequence+proc
 process.NoFilter_PFBTagDeepCSV_v1_var53 = cms.Path(process.HLTBeginSequence+process.hltPreNoFilterPFBTagDeepCSVP1+process.HLTAK4PFJetsSequence+process.HLTBtagDeepCSVSequencePFvar53+process.HLTEndSequence)
 
 
+#process.DQMOutput = cms.EndPath(process.dqmOutput)
+process.hltOutputFULL = cms.OutputModule("PoolOutputModule",
+                                         dataset = cms.untracked.PSet(),
+                                         fileName = cms.untracked.string('./cmsswPreProcessing.root'),
+                                         outputCommands = cms.untracked.vstring('drop *',                                                                             
+                                                                                'keep *Egamma*_*_*_*',
+                                                                                'keep bool*ValueMap*_*Electron*_*_*',
+                                                                                'keep l1t*_*_*_*',
+                                                                                'keep *_*Ht*_*_*',
+                                                                                'keep *Jet*_*_*_*',
+                                                                                'keep *Electron*_*_*_*',
+                                                                                'keep *Muon*_*_*_*',
+                                                                                'keep *Track*_*_*_*',
+                                                                                'drop *Track*_hlt*_*_*',
+                                                                                'drop SimTracks_*_*_*',
+                                                                                'keep *SuperCluster*_*_*_*',
+                                                                                'keep *MET*_*_*_*',
+                                                                                'keep *Vertex*_*_*_*',
+                                                                                'keep *Shallow*_hltDeep*_*_*',
+                                                                                #######
+                                                                                #'keep *_genParticles_*_*',#AOD
+                                                                                'keep *_prunedGenParticles_*_*',#MINIAOD
+                                                                                #######
+                                                                                'keep *genParticles_*_*_*',
+                                                                                'keep *Trigger*_*_*_*',
+                                                                                'keep recoJetedmRefToBaseProdTofloatsAssociationVector_*_*_*',
+                                                                                #######
+                                                                                #'keep *_addPileupInfo_*_*', #AOD
+                                                                                'keep *_slimmedAddPileupInfo_*_*',#MINIAOD
+                                                                                #######
+                                                                                'drop *_*Digis*_*_*',
+                                                                                'drop triggerTriggerEvent_*_*_*',
+                                                                                'keep *_hltGtStage2Digis_*_*',
+                                                                                'keep *_generator_*_*')
+)
 process.FULLOutput = cms.EndPath(process.hltOutputFULL)
+
+
+
 
 

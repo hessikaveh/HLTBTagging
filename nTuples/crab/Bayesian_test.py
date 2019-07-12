@@ -1,4 +1,4 @@
-from hlt_data_dump import *
+template = """from hlt_data_dump import *
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring('root://cms-xrd-global.cern.ch//store/data/Run2017C/MuonEG/RAW/v1/000/299/368/00000/00E9C4F1-E76B-E711-8952-02163E01A27B.root'),
@@ -9,10 +9,10 @@ process.HLTConfigVersion = cms.PSet(
     tableName = cms.string('/users/hkaveh/Tutorial/BTagHLTtest/V3')
 )
 
-process.hltDeepBLifetimeTagInfosPF.maxDeltaR = cms.double(0.8)
-process.hltDeepBLifetimeTagInfosPF.minimumNumberOfHits = cms.int32(1)
-process.hltDeepBLifetimeTagInfosPF.minimumTransverseMomentum = cms.double(0.0)
-process.hltDeepBLifetimeTagInfosPF.maximumLongitudinalImpactParameter = cms.double(0.0904872166516)
+process.hltDeepBLifetimeTagInfosPF.maxDeltaR = cms.double({maxDeltaR})
+process.hltDeepBLifetimeTagInfosPF.minimumNumberOfHits = cms.int32({minimumNumberOfHits})
+process.hltDeepBLifetimeTagInfosPF.minimumTransverseMomentum = cms.double({minimumTransverseMomentum})
+process.hltDeepBLifetimeTagInfosPF.maximumLongitudinalImpactParameter = cms.double({maximumLongitudinalImpactParameter})
 
 
 
@@ -727,3 +727,281 @@ process.hltOutputFULL = cms.OutputModule("PoolOutputModule",
                                                                                 'keep *_generator_*_*')
 )
 process.FULLOutput = cms.EndPath(process.hltOutputFULL)
+"""
+
+
+
+
+#!/usr/bin/env python
+import os
+#import PhysicsTools.HeppyCore.framework.config as cfg
+#cfg.Analyzer.nosubdir=True
+
+import sys
+import re
+
+import shlex
+from subprocess import Popen, PIPE
+def launch(cmd):
+    process = Popen(shlex.split(cmd), stdout=PIPE)
+    output = process.communicate() #output
+    exit_code = process.wait()
+    return exit_code
+
+print "ARGV:",sys.argv
+JobNumber=sys.argv[1]
+islocal = False
+try:
+    ##CRAB
+    import PSet
+    crabFiles=PSet.process.source.fileNames
+    crabSecondaryFiles=PSet.process.source.secondaryFileNames
+    maxEvents=int(PSet.process.maxEvents.input.value())
+    VLuminosityBlockRange = PSet.process.source.lumisToProcess
+except:
+    ##local test
+    print "=================== I'm using local parameters ==================="
+    import PSet_localTest as PSet
+    crabFiles=PSet.process.source.fileNames
+    crabSecondaryFiles=PSet.process.source.secondaryFileNames
+    maxEvents=int(PSet.process.maxEvents.input.value())
+    VLuminosityBlockRange = PSet.process.source.lumisToProcess
+    islocal = True
+if maxEvents<0:
+    maxEvents = 100
+print "crabFiles before: ",crabFiles
+print "crabSecondaryFiles before: ",crabSecondaryFiles
+
+if len(crabFiles)>0:
+    firstInput = crabFiles[0]
+else:
+    firstInput = "emptyFile"
+print "crabFiles after: ",crabFiles
+print "crabSecondaryFiles after: ",crabSecondaryFiles
+
+
+from fwlite_config_phaseI import *
+import imp
+handle = open("fwlite_config_phaseI.py", 'r')
+cfo = imp.load_source("config", "fwlite_config_phaseI.py", handle)
+#config = cfo.config
+handle.close()
+
+######################################################################
+#### Necessary stuff to make the root files into usable dataFrame ####
+######################################################################
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from root_numpy import root2array
+import glob
+from numpy.lib.recfunctions import stack_arrays
+import h5py
+import json
+
+def root2pandas(files_path, tree_name, **kwargs):
+    '''
+    Args:
+    -----
+        files_path: a string like './data/*.root', for example
+        tree_name: a string like 'Collection_Tree' corresponding to the name of the folder inside the root 
+                   file that we want to open
+        kwargs: arguments taken by root2array, such as branches to consider, start, stop, step, etc
+    Returns:
+    --------    
+        output_panda: a pandas dataframe like allbkg_df in which all the info from the root file will be stored
+    
+    Note:
+    -----
+        if you are working with .root files that contain different branches, you might have to mask your data
+        in that case, return pd.DataFrame(ss.data)
+    '''
+    # -- create list of .root files to process
+    files = glob.glob(files_path)
+    
+    # -- process ntuples into rec arrays
+    ss = stack_arrays([root2array(fpath, tree_name, **kwargs).view(np.recarray) for fpath in files])
+
+    try:
+        return pd.DataFrame(ss)
+    except Exception:
+        return pd.DataFrame(ss.data)
+    
+    
+def flatten(column):
+    '''
+    Args:
+    -----
+        column: a column of a pandas df whose entries are lists (or regular entries -- in which case nothing is done)
+                e.g.: my_df['some_variable'] 
+    Returns:
+    --------    
+        flattened out version of the column. 
+        For example, it will turn:
+        [1791, 2719, 1891]
+        [1717, 1, 0, 171, 9181, 537, 12]
+        [82, 11]
+        ...
+        into:
+        1791, 2719, 1891, 1717, 1, 0, 171, 9181, 537, 12, 82, 11, ...
+    '''
+    try:
+        return np.array([v for e in column for v in e])
+    except (TypeError, ValueError):
+        return column
+
+branches= ['pfJets_deepcsv', 'offJets_deepcsv']
+context = {
+    "maxDeltaR":0.2,
+    'minimumNumberOfHits'   : 3,
+    'minimumTransverseMomentum'   : 1.,
+    'maximumLongitudinalImpactParameter'   : 17.,
+    }
+
+import math
+import matplotlib.pyplot as plt
+from matplotlib import gridspec
+
+def sigmoid(x):
+  return 1. / (1. + math.exp(-x))
+
+def div(x,y):
+        return x-y
+vdiv = np.vectorize(div)
+
+
+def sampling_run(**kwargs):
+    print("Sampling: ", kwargs)
+    context['maxDeltaR'] = kwargs['maxDeltaR']
+    context['minimumNumberOfHits'] =int( kwargs['minimumNumberOfHits'])
+    context['minimumTransverseMomentum'] = kwargs['minimumTransverseMomentum']
+    context['maximumLongitudinalImpactParameter'] = kwargs['maximumLongitudinalImpactParameter']
+
+    print (context['maxDeltaR'])
+    f= open("hlt_dump_phase1.py", 'w+')
+    f.write(template.format(**context))
+    f.close()
+    launchNtupleFromHLT("tree.root",crabFiles,crabSecondaryFiles,maxEvents, LS = VLuminosityBlockRange, local = islocal, preProcessing=True)
+    df = root2pandas("tree.root",'tree', branches=branches)
+    print(df.head())
+    pf = df['pfJets_deepcsv'].values
+    off = df['offJets_deepcsv'].values
+
+    pf = flatten(pf)
+    off = flatten(off)
+    pf = [x if x > -2 else -1 for x in pf]
+
+
+
+    metric = abs(np.mean(pf) - np.mean(off))
+    metric = 1 - sigmoid(metric)
+
+    fig = plt.figure(figsize=(8, 6))
+    gs = gridspec.GridSpec(2, 1, height_ratios=[3, 1]) 
+    ax0 = plt.subplot(gs[0],label="hist")
+    rng = [-1, 1]
+    nbins = 40
+    h_pf = ax0.hist(pf,range=rng, bins = nbins, color='tomato', alpha = 0.5,  label = 'pf')
+    h_off = ax0.hist(off,range=rng, bins = nbins, color='darkblue', alpha = 0.5,  label = 'off')
+    ax0.legend()
+    x = h_pf[1][1:]
+    ax1 = plt.subplot(gs[1])
+    ax1.plot(x, vdiv(h_pf[0],h_off[0]), color='darkorange')
+    plt.savefig("plots/deepcsv%s.png" %(metric))
+    plt.close()
+
+
+    return metric
+
+#print("start one run")
+#sampling_run()
+
+print("Do the Bayesian part.....")
+#from xgbo import BayesianOptimization
+from bayes_opt import BayesianOptimization
+from bayes_opt.observer import JSONLogger
+from bayes_opt.event import Events
+logger = JSONLogger(path="./logs.json")
+
+par_space = {
+    'maxDeltaR'   : (0., 0.8),
+    'minimumNumberOfHits'   : (1, 10),
+    'minimumTransverseMomentum'   : (0., 10.),
+    'maximumLongitudinalImpactParameter'   : (0., 30.),
+    #'n_nodes'    : (len(features)/3, 3*len(features)), 
+    #'dropout'    : (0., 0.8),
+    #'log_learn_rate' : (-4., -1),
+    #'batch_size' : (500, 2000),
+    #'n_epochs'   : (100, 500),
+    }
+
+bo = BayesianOptimization(
+    f=sampling_run,
+    pbounds=par_space,
+    random_state=1,
+    verbose=1,
+)
+bo.subscribe(Events.OPTMIZATION_STEP, logger)
+
+bo.maximize(
+    init_points=5,
+    n_iter=5,
+)
+print(bo.max)
+
+for i, res in enumerate(bo.res):
+    print("Iteration {}: \n\t{}".format(i, res))
+
+
+print("Where is the output??")
+
+
+
+
+import ROOT
+try:
+    f=ROOT.TFile.Open('tree.root')
+    entries=f.Get('tree').GetEntries()
+except:
+    entries=0
+
+fwkreport='''<FrameworkJobReport>
+<ReadBranches>
+</ReadBranches>
+<PerformanceReport>
+  <PerformanceSummary Metric="StorageStatistics">
+    <Metric Name="Parameter-untracked-bool-enabled" Value="true"/>
+    <Metric Name="Parameter-untracked-bool-stats" Value="true"/>
+    <Metric Name="Parameter-untracked-string-cacheHint" Value="application-only"/>
+    <Metric Name="Parameter-untracked-string-readHint" Value="auto-detect"/>
+    <Metric Name="ROOT-tfile-read-totalMegabytes" Value="0"/>
+    <Metric Name="ROOT-tfile-write-totalMegabytes" Value="0"/>
+  </PerformanceSummary>
+</PerformanceReport>
+<GeneratorInfo>
+</GeneratorInfo>
+<InputFile>
+<LFN>%s</LFN>
+<PFN></PFN>
+<Catalog></Catalog>
+<InputType>primaryFiles</InputType>
+<ModuleLabel>source</ModuleLabel>
+<GUID></GUID>
+<InputSourceClass>PoolSource</InputSourceClass>
+<EventsRead>1</EventsRead>
+</InputFile>
+<File>
+<LFN></LFN>
+<PFN>tree.root</PFN>
+<Catalog></Catalog>
+<ModuleLabel>HEPPY</ModuleLabel>
+<GUID></GUID>
+<OutputModuleClass>PoolOutputModule</OutputModuleClass>
+<TotalEvents>%s</TotalEvents>
+<BranchHash>dc90308e392b2fa1e0eff46acbfa24bc</BranchHash>
+</File>
+</FrameworkJobReport>''' % (firstInput,entries)
+
+f1=open('./FrameworkJobReport.xml', 'w+')
+f1.write(fwkreport)
+
