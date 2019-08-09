@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 template = """from hlt_data_dump import *
 
 process.source = cms.Source("PoolSource",
@@ -9,10 +11,125 @@ process.HLTConfigVersion = cms.PSet(
     tableName = cms.string('/users/hkaveh/Tutorial/BTagHLTtest/V3')
 )
 
-process.hltDeepBLifetimeTagInfosPF.maxDeltaR = cms.double({maxDeltaR})
+process.hltPFJetForBtagSelector.MaxMass = cms.double({MaxMass})
+process.hltPFJetForBtagSelector.MinN = cms.int32({MinN})
+process.hltPFJetForBtagSelector.MaxEta = cms.double({MaxEta})
+process.hltPFJetForBtagSelector.MinEta = cms.double({MinEta})
+process.hltPFJetForBtagSelector.MinMass = cms.double({MinMass})
+process.hltPFJetForBtagSelector.MinE = cms.double({MinE})
+process.hltPFJetForBtagSelector.MinPt = cms.double({MinPt})
+
+process.hltDeepBLifetimeTagInfosPF.maximumTransverseImpactParameter = cms.double({maximumTransverseImpactParameter})
 process.hltDeepBLifetimeTagInfosPF.minimumNumberOfHits = cms.int32({minimumNumberOfHits})
 process.hltDeepBLifetimeTagInfosPF.minimumTransverseMomentum = cms.double({minimumTransverseMomentum})
 process.hltDeepBLifetimeTagInfosPF.maximumLongitudinalImpactParameter = cms.double({maximumLongitudinalImpactParameter})
+process.hltDeepBLifetimeTagInfosPF.maxDeltaR = cms.double({maxDeltaR})
+process.hltDeepBLifetimeTagInfosPF.minimumNumberOfPixelHits = cms.int32({minimumNumberOfPixelHits})
+process.hltDeepBLifetimeTagInfosPF.ghostTrackPriorDeltaR = cms.double({ghostTrackPriorDeltaR})
+process.hltDeepBLifetimeTagInfosPF.maximumChiSquared = cms.double({maximumChiSquared})
+
+process.hltDeepInclusiveVertexFinderPF.fitterSigmacut = cms.double({fitterSigmacut})
+process.hltDeepInclusiveVertexFinderPF.vertexReco.primcut = cms.double({primcut})
+process.hltDeepInclusiveVertexFinderPF.vertexReco.seccut = cms.double({seccut})
+process.hltDeepInclusiveVertexFinderPF.fitterTini = cms.double({fitterTini})
+process.hltDeepInclusiveVertexFinderPF.fitterRatio = cms.double({fitterRatio})
+process.hltDeepInclusiveVertexFinderPF.vertexMinDLen2DSig = cms.double({vertexMinDLen2DSig})
+process.hltDeepInclusiveVertexFinderPF.maximumLongitudinalImpactParameter = cms.double({maximumLongitudinalImpactParameter})
+process.hltDeepInclusiveVertexFinderPF.vertexMinAngleCosine = cms.double({vertexMinAngleCosine})
+process.hltDeepInclusiveVertexFinderPF.maxNTracks = cms.uint32({maxNTracks})
+process.hltDeepInclusiveVertexFinderPF.clusterizer.distanceRatio = cms.double({distanceRatio})
+process.hltDeepInclusiveVertexFinderPF.clusterizer.clusterMaxDistance = cms.double({clusterMaxDistance})
+process.hltDeepInclusiveVertexFinderPF.clusterizer.clusterMaxSignificance = cms.double({clusterMaxSignificance})
+process.hltDeepInclusiveVertexFinderPF.clusterizer.seedMin3DIPSignificance = cms.double({seedMin3DIPSignificance})
+process.hltDeepInclusiveVertexFinderPF.clusterizer.clusterMinAngleCosine = cms.double({clusterMinAngleCosine})
+process.hltDeepInclusiveVertexFinderPF.clusterizer.seedMin3DIPValue = cms.double({seedMin3DIPValue})
+process.hltDeepInclusiveVertexFinderPF.vertexMinDLenSig = cms.double({vertexMinDLenSig})
+process.hltDeepInclusiveVertexFinderPF.minHits = cms.uint32({minHits})
+process.hltDeepInclusiveVertexFinderPF.minPt = cms.double({minPt})
+process.hltDeepInclusiveSecondaryVerticesPF.minSignificance = cms.double({minSignificance})
+process.hltDeepInclusiveSecondaryVerticesPF.maxFraction = cms.double({maxFraction})
+process.hltDeepTrackVertexArbitratorPF.fitterSigmacut = cms.double({fitterSigmacut})
+process.hltDeepTrackVertexArbitratorPF.fitterTini = cms.double({fitterTini}) 
+process.hltDeepTrackVertexArbitratorPF.trackMinLayers = cms.int32({trackMinLayers})
+process.hltDeepTrackVertexArbitratorPF.fitterRatio = cms.double({fitterRatio})
+process.hltDeepTrackVertexArbitratorPF.sigCut = cms.double({sigCut})
+process.hltDeepTrackVertexArbitratorPF.distCut = cms.double({distCut})
+process.hltDeepTrackVertexArbitratorPF.trackMinPt = cms.double({trackMinPt})
+process.hltDeepTrackVertexArbitratorPF.dLenFraction = cms.double({dLenFraction})
+process.hltDeepTrackVertexArbitratorPF.trackMinPixels = cms.int32({trackMinPixels})
+process.hltDeepTrackVertexArbitratorPF.dRCut = cms.double({dRCut})
+process.hltDeepInclusiveMergedVerticesPF.minSignificance = cms.double({minSignificance})
+process.hltDeepInclusiveMergedVerticesPF.maxFraction = cms.double({maxFraction})
+process.hltDeepSecondaryVertexTagInfosPF.extSVDeltaRToJet = cms.double({extSVDeltaRToJet})
+process.hltDeepSecondaryVertexTagInfosPF.vertexReco.primcut = cms.double({primcut})
+process.hltDeepSecondaryVertexTagInfosPF.vertexReco.seccut = cms.double({seccut})
+process.hltDeepSecondaryVertexTagInfosPF.vertexReco.weightthreshold = cms.double({weightthreshold})
+process.hltDeepSecondaryVertexTagInfosPF.vertexReco.minweight = cms.double({minweight})
+process.hltDeepSecondaryVertexTagInfosPF.vertexCuts.distSig2dMin = cms.double({distSig2dMin})
+process.hltDeepSecondaryVertexTagInfosPF.vertexCuts.massMax = cms.double({massMax})
+process.hltDeepSecondaryVertexTagInfosPF.vertexCuts.distVal2dMin = cms.double({distVal2dMin})
+process.hltDeepSecondaryVertexTagInfosPF.vertexCuts.minimumTrackWeight = cms.double({minimumTrackWeight})
+process.hltDeepSecondaryVertexTagInfosPF.vertexCuts.v0Filter.k0sMassWindow  = cms.double({k0sMassWindow})
+process.hltDeepSecondaryVertexTagInfosPF.vertexCuts.fracPV = cms.double({fracPV})
+process.hltDeepSecondaryVertexTagInfosPF.vertexCuts.maxDeltaRToJetAxis = cms.double({maxDeltaRToJetAxis})
+process.hltDeepSecondaryVertexTagInfosPF.vertexCuts.distVal2dMax = cms.double({distVal2dMax})
+process.hltDeepSecondaryVertexTagInfosPF.vertexCuts.multiplicityMin = cms.uint32({multiplicityMin})
+process.hltDeepSecondaryVertexTagInfosPF.minimumTrackWeight = cms.double({minimumTrackWeight})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.max_pT_dRcut = cms.double({max_pT_dRcut})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.b_dR = cms.double({b_dR})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.min_pT = cms.double({min_pT})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.b_pT = cms.double({b_pT})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.ptMin = cms.double({ptMin})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.max_pT_trackPTcut = cms.double({max_pT_trackPTcut})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.max_pT = cms.double({max_pT})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.a_dR = cms.double({a_dR})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.maxDistToAxis = cms.double({maxDistToAxis})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.totalHitsMin = cms.uint32({totalHitsMin})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.a_pT = cms.double({a_pT})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.min_pT_dRcut = cms.double({min_pT_dRcut})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.jetDeltaRMax = cms.double({jetDeltaRMax})
+process.hltDeepSecondaryVertexTagInfosPF.trackSelection.pixelHitsMin = cms.uint32({pixelHitsMin})
+
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPairV0Filter.k0sMassWindow = cms.double({k0sMassWindow})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.pseudoMultiplicityMin = cms.uint32({pseudoMultiplicityMin})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.minimumTrackWeight = cms.double({minimumTrackWeight}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.charmCut = cms.double({charmCut}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.max_pT_dRcut = cms.double({max_pT_dRcut}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.b_dR = cms.double({b_dR}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.min_pT = cms.double({min_pT})   
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.b_pT = cms.double({b_pT})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.ptMin = cms.double({ptMin})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.max_pT_trackPTcut = cms.double({max_pT_trackPTcut})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.max_pT = cms.double({max_pT}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.a_dR = cms.double({a_dR}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.maxDistToAxis = cms.double({maxDistToAxis}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.totalHitsMin = cms.uint32({totalHitsMin})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.a_pT = cms.double({a_pT})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.min_pT_dRcut = cms.double({min_pT_dRcut})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.jetDeltaRMax = cms.double({jetDeltaRMax}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.pixelHitsMin = cms.uint32({pixelHitsMin}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.maxDecayLen = cms.double({maxDecayLen})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackPseudoSelection.sip2dSigMin = cms.double({sip2dSigMin})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.max_pT_dRcut = cms.double({max_pT_dRcut}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.b_dR = cms.double({b_dR}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.min_pT = cms.double({min_pT}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.b_pT = cms.double({b_pT})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.ptMin = cms.double({ptMin})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.max_pT_trackPTcut = cms.double({max_pT_trackPTcut})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.max_pT = cms.double({max_pT})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.a_dR = cms.double({a_dR}) 
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.maxDistToAxis = cms.double({maxDistToAxis})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.totalHitsMin = cms.uint32({totalHitsMin})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.a_pT = cms.double({a_pT})  
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.min_pT_dRcut = cms.double({min_pT_dRcut})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.jetDeltaRMax = cms.double({jetDeltaRMax})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.pixelHitsMin = cms.uint32({pixelHitsMin})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackSelection.maxDecayLen = cms.double({maxDecayLen})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.pseudoVertexV0Filter.k0sMassWindow = cms.double({k0sMassWindow})
+process.hltDeepCombinedSecondaryVertexBJetTagsInfos.computer.trackMultiplicityMin = cms.uint32({trackMultiplicityMin})
+
+
+
 
 
 
@@ -852,15 +969,101 @@ def flatten(column):
 
 branches= ['pfJets_deepcsv', 'offJets_deepcsv']
 context = {
+    #hltPFJetForBtagSelector
+    'MaxMass': -1.0,
+    'MinN': 1,
+    'MaxEta': 2.6,
+    'MinEta': -1.0,
+    'MinMass': -1.0,
+    'MinE':-1.0,
+    'MinPt': 30,
+    
+    #hltDeepBLifetimeTagInfosPF
+    'maximumTransverseImpactParameter':0.2,
+    'minimumNumberOfPixelHits': 2,
     "maxDeltaR":0.2,
     'minimumNumberOfHits'   : 3,
     'minimumTransverseMomentum'   : 1.,
     'maximumLongitudinalImpactParameter'   : 17.,
+    'ghostTrackPriorDeltaR': 0.03,
+    'maximumChiSquared': 5.0,
+    #hltDeepInclusiveVertexFinderPF
+    'fitterSigmacut': 3.0,
+    'primcut': 1.0,
+    'seccut': 3.0,
+    'fitterTini': 256.0,
+    'fitterRatio': 0.25,
+    'vertexMinDLen2DSig': 2.5,
+    'vertexMinAngleCosine': 0.95,
+    'maxNTracks': 30,
+    'distanceRatio': 20.0,
+    'clusterMaxDistance': 0.05,
+    'clusterMaxSignificance': 4.5,
+    'seedMin3DIPSignificance': 1.2,
+    'seedMin3DIPSignificance': 0.5,
+    'seedMin3DIPValue': 0.005,
+    'vertexMinDLenSig': 0.5,
+    'minHits': 8,
+    'minPt': 0.8,
+    #hltDeepInclusiveSecondaryVerticesPF
+    'minSignificance': 0.2,
+    'maxFraction': 0.7,
+    #hltDeepTrackVertexArbitratorPF
+    'trackMinLayers': 4,
+    'sigCut': 5.0,
+    'distCut': 0.04,
+    'trackMinPt': 0.4,
+    'dLenFraction': 0.333,
+    'trackMinPixels': 1,
+    'dRCut': 0.4,
+    #hltDeepInclusiveMergedVerticesPF
+    #'minSignificance_2': 10.0,
+    #'maxFraction_2': 0.2,
+    #hltDeepSecondaryVertexTagInfosPF
+    'extSVDeltaRToJet': 0.3,
+    #'primcut_2': 1.8,
+    #'seccut_2': 6.0,
+    'weightthreshold': 0.001,
+    'minweight': 0.5,
+    'distSig2dMin': 2.0,
+    'massMax': 6.5,
+    'distVal2dMin': 0.01,
+    'minimumTrackWeight': 0.5,
+    'k0sMassWindow': 0.05,
+    'fracPV': 0.79,
+    'maxDeltaRToJetAxis': 0.4,
+    'distVal2dMax': 2.5,
+    'multiplicityMin': 2,
+    'max_pT_dRcut': 0.1,
+    'b_dR': 0.6263,
+    'min_pT': 120.0,
+    'b_pT': 0.3684,
+    'ptMin': 1.0,
+    'max_pT_trackPTcut': 3.0,
+    'max_pT': 500.0,
+    'a_dR': -0.001053,
+    'maxDistToAxis': 0.2,
+    'totalHitsMin': 3,
+    'a_pT': 0.005263,
+    'min_pT_dRcut': 0.5,
+    'jetDeltaRMax': 0.3,
+    'pixelHitsMin': 2,
+    'maxDecayLen' : 5.0,
+    'sip2dSigMin': 2.0,
+    #'k0sMassWindow_2': 0.03,
+    'charmCut': 1.5,
+    #'k0sMassWindow_3': 0.05,
+    'trackMultiplicityMin': 2,
+    'pseudoMultiplicityMin': 2,
+    'clusterMinAngleCosine' : 0.5,
+
     }
 
 import math
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
+
+plt.ioff()
 
 def sigmoid(x):
   return 1. / (1. + math.exp(-x))
@@ -872,10 +1075,31 @@ vdiv = np.vectorize(div)
 
 def sampling_run(**kwargs):
     print("Sampling: ", kwargs)
-    context['maxDeltaR'] = kwargs['maxDeltaR']
-    context['minimumNumberOfHits'] =int( kwargs['minimumNumberOfHits'])
-    context['minimumTransverseMomentum'] = kwargs['minimumTransverseMomentum']
-    context['maximumLongitudinalImpactParameter'] = kwargs['maximumLongitudinalImpactParameter']
+    
+    context = kwargs
+    context['MinN'] = int(kwargs['MinN'])
+    context['minimumNumberOfHits'] = int(kwargs['minimumNumberOfHits'])
+    context['maxNTracks'] = int(kwargs['maxNTracks'])
+    context['minHits'] = int(kwargs['minHits'])
+    context['trackMinLayers'] = int(kwargs['trackMinLayers'])
+    context['trackMinPixels'] = int(kwargs['trackMinPixels'])
+    context['multiplicityMin'] = int(kwargs['multiplicityMin'])
+    context['totalHitsMin'] = int(kwargs['totalHitsMin'])
+    context['pixelHitsMin'] = int(kwargs['pixelHitsMin'])
+    context['pseudoMultiplicityMin'] = int(kwargs['pseudoMultiplicityMin'])
+    context['trackMultiplicityMin'] = int(kwargs['trackMultiplicityMin'])
+    context['minimumNumberOfPixelHits'] = int(kwargs['minimumNumberOfPixelHits'])
+    
+    
+    
+    
+    
+    
+    
+    #context['maxDeltaR'] = kwargs['maxDeltaR']
+    #context['minimumNumberOfHits'] =int( kwargs['minimumNumberOfHits'])
+    #context['minimumTransverseMomentum'] = kwargs['minimumTransverseMomentum']
+    #context['maximumLongitudinalImpactParameter'] = kwargs['maximumLongitudinalImpactParameter']
 
     print (context['maxDeltaR'])
     f= open("hlt_dump_phase1.py", 'w+')
@@ -894,7 +1118,8 @@ def sampling_run(**kwargs):
 
 
     metric = abs(np.mean(pf) - np.mean(off))
-    metric = 1 - sigmoid(metric)
+    #metric = 1 - sigmoid(metric)
+    metric = 1 - (metric)
 
     fig = plt.figure(figsize=(8, 6))
     gs = gridspec.GridSpec(2, 1, height_ratios=[3, 1]) 
@@ -921,13 +1146,106 @@ print("Do the Bayesian part.....")
 from bayes_opt import BayesianOptimization
 from bayes_opt.observer import JSONLogger
 from bayes_opt.event import Events
+from bayes_opt.util import load_logs
+
 logger = JSONLogger(path="./logs.json")
 
 par_space = {
-    'maxDeltaR'   : (0., 0.8),
-    'minimumNumberOfHits'   : (1, 10),
-    'minimumTransverseMomentum'   : (0., 10.),
-    'maximumLongitudinalImpactParameter'   : (0., 30.),
+#    'maxDeltaR'   : (0., 0.8),
+#    'minimumNumberOfHits'   : (1, 10),
+#    'minimumTransverseMomentum'   : (0., 10.),
+#    'maximumLongitudinalImpactParameter'   : (0., 30.),
+
+    #hltPFJetForBtagSelector
+    'MaxMass': (-1.0, -1.0),
+    'MinN': (0, 10),
+    'MaxEta': (0.0, 5.0),
+    'MinEta': (-1.0, -1.0),
+    'MinMass': (-1.0, -1.0),
+    'MinE': (-1.0, -1.0),
+    'MinPt': (0.0, 60.0),
+    
+    #hltDeepBLifetimeTagInfosPF
+    'maximumTransverseImpactParameter':(0.0, 10.0),
+    'minimumNumberOfPixelHits': (0, 10),
+    "maxDeltaR": (0.0, 1.0),
+    'minimumNumberOfHits'   : (0, 10),
+    'minimumTransverseMomentum'   : (0.0, 30.0),
+    'maximumLongitudinalImpactParameter'   : (0.0, 30.),
+    'ghostTrackPriorDeltaR': (0.00, 1.00),
+    'maximumChiSquared': (0.0, 10.0),
+    #hltDeepInclusiveVertexFinderPF
+    'fitterSigmacut': (0.0, 10.0),
+    'primcut': (0.0, 10.0),
+    'seccut': (0.0, 10.0),
+    'fitterTini': (0.0, 500.0),
+    'fitterRatio': (0.0, 1.0),
+    'vertexMinDLen2DSig': (0.0, 10.0),
+    'vertexMinAngleCosine': (0.0, 1.0),
+    'clusterMinAngleCosine': (0.0, 1.0),
+    'maxNTracks': (0.0, 50.0),
+    'distanceRatio': (0.0, 50.0),
+    'clusterMaxDistance': (0.0, 1.0),
+    'clusterMaxSignificance': (0.0, 10.0),
+    'seedMin3DIPSignificance': (0.0, 10.0),
+    'seedMin3DIPSignificance': (0.0, 10.0),
+    'seedMin3DIPValue': (0.0, 1.0),
+    'vertexMinDLenSig': (0.0, 10.0),
+    'minHits': (0, 10),
+    'minPt': (0.0, 30.0),
+    #hltDeepInclusiveSecondaryVerticesPF
+    'minSignificance': (0.0, 10.0),
+    'maxFraction': (0.0, 1.0),
+    #hltDeepTrackVertexArbitratorPF
+    'trackMinLayers': (0, 10),
+    'sigCut': (0.0, 10.0),
+    'distCut': (0.0, 1.0),
+    'trackMinPt': (0.0, 30.0),
+    'dLenFraction': (0.0, 1.0),
+    'trackMinPixels': (0, 10),
+    'dRCut': (0.0, 1.0),
+    #hltDeepInclusiveMergedVerticesPF
+    #'minSignificance_2': (0.0, 20.0),
+    #'maxFraction_2': (0.0, 1.0),
+    #hltDeepSecondaryVertexTagInfosPF
+    'extSVDeltaRToJet': (0.0, 1.0),
+    #'primcut_2': (0.0, 10.0),
+    #'seccut_2': (0.0, 10.0),
+    'weightthreshold': (0.0, 1.0),
+    'minweight': (0.0, 1.0),
+    'distSig2dMin': (0.0, 10.0),
+    'massMax': (0.0, 20.0),
+    'distVal2dMin': (0.0, 1.0),
+    'minimumTrackWeight': (0.0, 1.0),
+    'k0sMassWindow': (0.0, 1.0),
+    'fracPV': (0.0, 1.0),
+    'maxDeltaRToJetAxis': (0.0, 1.0),
+    'distVal2dMax': (0.0, 10.0),
+    'multiplicityMin': (0, 10),
+    'max_pT_dRcut': (0.0, 1.0),
+    'b_dR': (0.0, 1.0),
+    'min_pT': (0.0, 300.0),
+    'b_pT': (0.0, 1.0),
+    'ptMin': (0.0, 300.0),
+    'max_pT_trackPTcut': (0.0, 300.0),
+    'max_pT': (0.0, 1000.0),
+    'a_dR': (-1.0, 1.0),
+    'maxDistToAxis': (0.0, 10.0),
+    'totalHitsMin': (0, 10),
+    'a_pT': (0.0, 1.0),
+    'min_pT_dRcut': (0.0, 1.0),
+    'jetDeltaRMax': (0.0, 1.0),
+    'pixelHitsMin': (0.0, 10.0),
+    'maxDecayLen' : (0.0, 30.0),
+    'sip2dSigMin': (0.0, 10.0),
+    #'k0sMassWindow_2': (0.0, 1.0),
+    'charmCut': (0.0, 10.0),
+    #'k0sMassWindow_3': (0.0, 1.0),
+    'trackMultiplicityMin': (0.0, 10.0),    
+    'pseudoMultiplicityMin': (0.0, 10.0),
+
+
+
     #'n_nodes'    : (len(features)/3, 3*len(features)), 
     #'dropout'    : (0., 0.8),
     #'log_learn_rate' : (-4., -1),
@@ -938,14 +1256,20 @@ par_space = {
 bo = BayesianOptimization(
     f=sampling_run,
     pbounds=par_space,
-    random_state=1,
+#    random_state=1,
     verbose=1,
 )
+load_logs(bo, logs=["./logs_bkup.json"]);
 bo.subscribe(Events.OPTMIZATION_STEP, logger)
 
+bo.probe(
+    params=context,
+    lazy=True,
+)
+
 bo.maximize(
-    init_points=5,
-    n_iter=5,
+    init_points=100,
+    n_iter=100,
 )
 print(bo.max)
 
