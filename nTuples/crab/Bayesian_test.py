@@ -873,7 +873,8 @@ try:
     import PSet
     crabFiles=PSet.process.source.fileNames
     crabSecondaryFiles=PSet.process.source.secondaryFileNames
-    maxEvents=int(PSet.process.maxEvents.input.value())
+    #maxEvents=int(PSet.process.maxEvents.input.value())
+    maxEvents= 10000
     VLuminosityBlockRange = PSet.process.source.lumisToProcess
 except:
     ##local test
@@ -967,7 +968,7 @@ def flatten(column):
     except (TypeError, ValueError):
         return column
 
-branches= ['pfJets_deepcsv', 'offJets_deepcsv']
+branches= ['pfJets_deepcsv', 'offJets_deepcsv', 'pfJets_jetNTracks', 'offJets_jetNTracks']
 context = {
     #hltPFJetForBtagSelector
     'MaxMass': -1.0,
@@ -1060,9 +1061,11 @@ context = {
     }
 
 import math
+import matplotlib
+matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
-
+#plt.use('Agg')
 plt.ioff()
 
 def sigmoid(x):
@@ -1111,15 +1114,24 @@ def sampling_run(**kwargs):
     pf = df['pfJets_deepcsv'].values
     off = df['offJets_deepcsv'].values
 
+    #pf_selTrk = df['pfJets_jetNTracks'].values
+    #off_selTrk = df['offJets_jetNTracks'].values
+
+    #pf_selTrk = flatten(pf_selTrk)
+    #off_selTrk = flatten(off_selTrk)
+
+
     pf = flatten(pf)
     off = flatten(off)
     pf = [x if x > -2 else -1 for x in pf]
 
 
 
-    metric = abs(np.mean(pf) - np.mean(off))
-    #metric = 1 - sigmoid(metric)
-    metric = 1 - (metric)
+    metric_ = abs(np.mean(pf) - np.mean(off))
+    #metric_selTrk = abs(np.mean(pf_selTrk) - np.mean(off_selTrk))
+    metric = 1 - sigmoid(metric_) 
+    #print(metric, metric_selTrk, metric_)
+    #metric = 1 - (metric)
 
     fig = plt.figure(figsize=(8, 6))
     gs = gridspec.GridSpec(2, 1, height_ratios=[3, 1]) 
@@ -1158,51 +1170,50 @@ par_space = {
 
     #hltPFJetForBtagSelector
     'MaxMass': (-1.0, -1.0),
-    'MinN': (0, 10),
-    'MaxEta': (0.0, 5.0),
+    'MinN': (0, 2),
+    'MaxEta': (2.0, 3.0),
     'MinEta': (-1.0, -1.0),
     'MinMass': (-1.0, -1.0),
     'MinE': (-1.0, -1.0),
-    'MinPt': (0.0, 60.0),
+    'MinPt': (25.0, 35.0),
     
     #hltDeepBLifetimeTagInfosPF
-    'maximumTransverseImpactParameter':(0.0, 10.0),
-    'minimumNumberOfPixelHits': (0, 10),
-    "maxDeltaR": (0.0, 1.0),
-    'minimumNumberOfHits'   : (0, 10),
-    'minimumTransverseMomentum'   : (0.0, 30.0),
-    'maximumLongitudinalImpactParameter'   : (0.0, 30.),
-    'ghostTrackPriorDeltaR': (0.00, 1.00),
+    'maximumTransverseImpactParameter':(0.0, 0.9),
+    'minimumNumberOfPixelHits': (0, 4),
+    "maxDeltaR": (0.0, 0.9),
+    'minimumNumberOfHits'   : (0, 4),
+    'minimumTransverseMomentum'   : (0.0, 10.0),
+    'maximumLongitudinalImpactParameter'   : (10.0, 20.),
+    'ghostTrackPriorDeltaR': (0.00, 0.05),
     'maximumChiSquared': (0.0, 10.0),
     #hltDeepInclusiveVertexFinderPF
     'fitterSigmacut': (0.0, 10.0),
     'primcut': (0.0, 10.0),
     'seccut': (0.0, 10.0),
-    'fitterTini': (0.0, 500.0),
+    'fitterTini': (100.0, 300.0),
     'fitterRatio': (0.0, 1.0),
     'vertexMinDLen2DSig': (0.0, 10.0),
     'vertexMinAngleCosine': (0.0, 1.0),
     'clusterMinAngleCosine': (0.0, 1.0),
-    'maxNTracks': (0.0, 50.0),
-    'distanceRatio': (0.0, 50.0),
-    'clusterMaxDistance': (0.0, 1.0),
-    'clusterMaxSignificance': (0.0, 10.0),
-    'seedMin3DIPSignificance': (0.0, 10.0),
-    'seedMin3DIPSignificance': (0.0, 10.0),
-    'seedMin3DIPValue': (0.0, 1.0),
+    'maxNTracks': (20.0, 40.0),
+    'distanceRatio': (10.0, 30.0),
+    'clusterMaxDistance': (0.00, 0.09),
+    'clusterMaxSignificance': (0.0, 5.0),
+    'seedMin3DIPSignificance': (0.0, 5.0),
+    'seedMin3DIPValue': (0.000, 0.009),
     'vertexMinDLenSig': (0.0, 10.0),
     'minHits': (0, 10),
-    'minPt': (0.0, 30.0),
+    'minPt': (0.0, 0.99),
     #hltDeepInclusiveSecondaryVerticesPF
-    'minSignificance': (0.0, 10.0),
+    'minSignificance': (0.0, 0.99),
     'maxFraction': (0.0, 1.0),
     #hltDeepTrackVertexArbitratorPF
-    'trackMinLayers': (0, 10),
+    'trackMinLayers': (0, 5),
     'sigCut': (0.0, 10.0),
     'distCut': (0.0, 1.0),
-    'trackMinPt': (0.0, 30.0),
-    'dLenFraction': (0.0, 1.0),
-    'trackMinPixels': (0, 10),
+    'trackMinPt': (0.0, 0.99),
+    'dLenFraction': (0.0, 0.444),
+    'trackMinPixels': (0, 5),
     'dRCut': (0.0, 1.0),
     #hltDeepInclusiveMergedVerticesPF
     #'minSignificance_2': (0.0, 20.0),
@@ -1211,28 +1222,28 @@ par_space = {
     'extSVDeltaRToJet': (0.0, 1.0),
     #'primcut_2': (0.0, 10.0),
     #'seccut_2': (0.0, 10.0),
-    'weightthreshold': (0.0, 1.0),
+    'weightthreshold': (0.000, 0.099),
     'minweight': (0.0, 1.0),
     'distSig2dMin': (0.0, 10.0),
     'massMax': (0.0, 20.0),
-    'distVal2dMin': (0.0, 1.0),
+    'distVal2dMin': (0.00, 0.99),
     'minimumTrackWeight': (0.0, 1.0),
-    'k0sMassWindow': (0.0, 1.0),
-    'fracPV': (0.0, 1.0),
+    'k0sMassWindow': (0.00, 0.99),
+    'fracPV': (0.00, 0.99),
     'maxDeltaRToJetAxis': (0.0, 1.0),
     'distVal2dMax': (0.0, 10.0),
     'multiplicityMin': (0, 10),
     'max_pT_dRcut': (0.0, 1.0),
-    'b_dR': (0.0, 1.0),
+    'b_dR': (0.0000, 0.9999),
     'min_pT': (0.0, 300.0),
-    'b_pT': (0.0, 1.0),
+    'b_pT': (0.0000, 0.9999),
     'ptMin': (0.0, 300.0),
     'max_pT_trackPTcut': (0.0, 300.0),
     'max_pT': (0.0, 1000.0),
-    'a_dR': (-1.0, 1.0),
+    'a_dR': (-0.000000, 0.009999),
     'maxDistToAxis': (0.0, 10.0),
     'totalHitsMin': (0, 10),
-    'a_pT': (0.0, 1.0),
+    'a_pT': (0.000000, 0.009999),
     'min_pT_dRcut': (0.0, 1.0),
     'jetDeltaRMax': (0.0, 1.0),
     'pixelHitsMin': (0.0, 10.0),
@@ -1256,21 +1267,29 @@ par_space = {
 bo = BayesianOptimization(
     f=sampling_run,
     pbounds=par_space,
-#    random_state=1,
-    verbose=1,
+    random_state=7,
+    verbose=2,
 )
 load_logs(bo, logs=["./logs_bkup.json"]);
 bo.subscribe(Events.OPTMIZATION_STEP, logger)
 
 bo.probe(
     params=context,
-    lazy=True,
+    lazy=False,
 )
 
-bo.maximize(
-    init_points=100,
-    n_iter=100,
-)
+
+for i in range(100):
+    for attempt in range(10):
+        try:
+            bo.maximize(
+                init_points=100,
+                n_iter=10,
+                )
+        except:
+            continue
+        break
+
 print(bo.max)
 
 for i, res in enumerate(bo.res):
